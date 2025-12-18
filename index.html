@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Global */
     html {
       scroll-behavior: smooth;
     }
@@ -17,11 +16,10 @@
       padding: 0;
       overflow-x: hidden;
       font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #020617;
+      background: linear-gradient(to bottom right, #D1FAFE, #FFFFFF);
       color: #0f172a;
     }
 
-    /* Background canvas */
     canvas {
       position: fixed;
       top: 0;
@@ -30,198 +28,141 @@
       pointer-events: none;
     }
 
-    /* Overlay gradient on top of canvas, under content */
     .bg-overlay {
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 60%),
-                  radial-gradient(circle at bottom right, rgba(244, 114, 182, 0.16), transparent 55%),
-                  linear-gradient(to bottom, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98));
+      background: radial-gradient(circle at top left, rgba(0, 150, 200, 0.18), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(255, 150, 200, 0.16), transparent 55%);
     }
 
-    /* Hero glow behind text */
     .hero-glow {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: -1;
       background:
-        radial-gradient(circle at center, rgba(96, 165, 250, 0.25), transparent 60%),
-        radial-gradient(circle at center, rgba(236, 72, 153, 0.16), transparent 65%);
-      filter: blur(18px);
-      opacity: 0.9;
-    }
-
-    /* Simple bounce keyframes (used by Tailwind's animate-bounce utility) */
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(8px); }
+        radial-gradient(circle at center, rgba(0, 150, 200, 0.25), transparent 60%),
+        radial-gradient(circle at center, rgba(255, 120, 180, 0.18), transparent 65%);
+      filter: blur(40px);
+      opacity: 0.8;
     }
   </style>
 </head>
 
-<body class="text-slate-100">
+<body>
 
-  <!-- Background layers -->
   <canvas id="bgCanvas"></canvas>
   <div class="bg-overlay"></div>
 
-  <!-- Navbar -->
-  <header class="border-b border-slate-800 bg-slate-900/70 backdrop-blur-md fixed top-0 left-0 w-full z-20">
+  <header class="border-b border-slate-300/60 bg-white/60 backdrop-blur-md fixed top-0 left-0 w-full z-20">
     <nav class="max-w-6xl mx-auto flex justify-between items-center py-3 px-4 md:px-6">
-      <!-- Logo + tagline -->
       <div class="flex items-center space-x-3">
         <img src="assets/logo.png" alt="AeridonTech Logo"
-             class="h-8 w-auto object-contain drop-shadow-lg">
+             class="h-8 w-auto object-contain drop-shadow-md">
         <div class="flex flex-col leading-tight">
-          <span class="text-lg md:text-xl font-semibold tracking-tight">
+          <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-800">
             AeridonTech
           </span>
-          <span class="text-[10px] md:text-xs text-slate-400">
+          <span class="text-[10px] md:text-xs text-slate-500">
             Smart solutions. Modern design.
           </span>
         </div>
       </div>
 
-      <!-- Desktop Menu -->
       <div class="hidden md:flex items-center space-x-6 text-sm">
-        <a href="index.html" class="text-slate-300 hover:text-white transition-colors duration-200">Home</a>
-        <a href="about.html" class="text-slate-300 hover:text-white transition-colors duration-200">About</a>
-        <a href="services.html" class="text-slate-300 hover:text-white transition-colors duration-200">Services</a>
-        <a href="contact.html" class="text-slate-300 hover:text-white transition-colors duration-200">Contact</a>
+        <a href="index.html" class="text-slate-700 hover:text-slate-900 transition">Home</a>
+        <a href="about.html" class="text-slate-700 hover:text-slate-900 transition">About</a>
+        <a href="services.html" class="text-slate-700 hover:text-slate-900 transition">Services</a>
+        <a href="contact.html" class="text-slate-700 hover:text-slate-900 transition">Contact</a>
       </div>
 
-      <!-- Mobile Menu Icon (non-functional placeholder for now) -->
-      <div class="md:hidden text-3xl text-slate-100">
-        ☰
-      </div>
+      <div class="md:hidden text-3xl text-slate-700">☰</div>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section
-    class="relative min-h-[80vh] md:min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 md:pt-32 overflow-hidden">
-    <!-- Hero glow layer -->
+  <section class="relative min-h-[80vh] md:min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 md:pt-32">
     <div class="hero-glow"></div>
 
     <div class="relative max-w-3xl mx-auto">
-      <h1 class="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-50 mb-4">
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-800 mb-4">
         Design. Develop. Deliver.
       </h1>
-      <p class="text-sm md:text-base text-slate-300 max-w-xl mx-auto mb-8">
+      <p class="text-sm md:text-base text-slate-600 max-w-xl mx-auto mb-8">
         Clean interfaces, modern experiences, and smart systems crafted for businesses that expect more from their technology.
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mt-2">
         <button
-          class="px-6 py-3 text-sm md:text-base rounded-full bg-sky-500 hover:bg-sky-400 text-white font-medium
-                 shadow-lg shadow-sky-500/30 hover:shadow-sky-400/40
-                 transform hover:-translate-y-[1px] hover:scale-[1.02]
-                 transition-all duration-200"
-          onclick="location.href='services.html'">
+          class="px-6 py-3 text-sm md:text-base rounded-full bg-sky-500 hover:bg-sky-400 text-white font-medium shadow-md hover:shadow-lg transition">
           Explore Services
         </button>
 
         <button
-          class="px-6 py-3 text-sm md:text-base rounded-full border border-slate-500/80 text-slate-100 bg-slate-900/40
-                 hover:border-sky-400 hover:bg-slate-900/70
-                 backdrop-blur-md
-                 transform hover:-translate-y-[1px] hover:scale-[1.02]
-                 transition-all duration-200"
-          onclick="location.href='contact.html'">
+          class="px-6 py-3 text-sm md:text-base rounded-full border border-slate-400 text-slate-700 bg-white/60 hover:bg-white/90 backdrop-blur-md transition">
           Get in Touch
         </button>
       </div>
     </div>
 
-    <div class="text-3xl text-slate-400 mt-10 animate-bounce">
-      ↓
-    </div>
+    <div class="text-3xl text-slate-500 mt-10 animate-bounce">↓</div>
   </section>
 
-  <!-- Features Section -->
   <section class="max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-20">
     <div class="grid md:grid-cols-3 gap-6 md:gap-8">
-      <!-- Card 1 -->
-      <div
-        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
-               backdrop-blur-xl overflow-hidden
-               shadow-lg shadow-slate-950/40
-               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                    bg-gradient-to-br from-sky-500/15 via-transparent to-fuchsia-500/20"></div>
+
+      <div class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-sky-200/40 to-pink-200/40"></div>
         <div class="relative p-6 md:p-7">
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
-            Modern Web Experiences
-          </h3>
-          <p class="text-sm md:text-[15px] text-slate-300">
-            Sleek, responsive, and interactive websites that feel premium on every device, crafted with performance and detail in mind.
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Modern Web Experiences</h3>
+          <p class="text-sm md:text-[15px] text-slate-600">
+            Sleek, responsive, and interactive websites that feel premium on every device.
           </p>
         </div>
       </div>
 
-      <!-- Card 2 -->
-      <div
-        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
-               backdrop-blur-xl overflow-hidden
-               shadow-lg shadow-slate-950/40
-               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                    bg-gradient-to-br from-emerald-400/15 via-transparent to-sky-500/20"></div>
+      <div class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-teal-200/40 to-sky-200/40"></div>
         <div class="relative p-6 md:p-7">
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
-            Smart IT & Systems
-          </h3>
-          <p class="text-sm md:text-[15px] text-slate-300">
-            Reliable infrastructure, secure setups, and streamlined workflows that keep your business running smoothly and confidently.
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Smart IT & Systems</h3>
+          <p class="text-sm md:text-[15px] text-slate-600">
+            Reliable infrastructure and streamlined workflows that keep your business running smoothly.
           </p>
         </div>
       </div>
 
-      <!-- Card 3 -->
-      <div
-        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
-               backdrop-blur-xl overflow-hidden
-               shadow-lg shadow-slate-950/40
-               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                    bg-gradient-to-br from-fuchsia-400/15 via-transparent to-sky-400/20"></div>
+      <div class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-pink-200/40 to-sky-200/40"></div>
         <div class="relative p-6 md:p-7">
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
-            Automation & Efficiency
-          </h3>
-          <p class="text-sm md:text-[15px] text-slate-300">
-            Custom tools and automations that reduce manual work, remove friction, and give you more time to focus on growth.
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Automation & Efficiency</h3>
+          <p class="text-sm md:text-[15px] text-slate-600">
+            Custom tools and automations that reduce manual work and boost productivity.
           </p>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 py-6 text-center text-xs md:text-sm text-slate-500 bg-slate-950/90">
+  <footer class="border-t border-slate-300 py-6 text-center text-xs md:text-sm text-slate-600 bg-white/70 backdrop-blur-md">
     © 2025 AeridonTech — Crafted with precision. Powered by innovation.
   </footer>
 
-  <!-- Animation Script -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const canvas = document.getElementById('bgCanvas');
       const ctx = canvas.getContext('2d');
 
       let width, height;
-      let linesBack = [];
-      let linesFront = [];
-      let scrollY = 0;
+      let lines = [];
 
       const colors = [
-        '#073B4C', // deep teal
-        '#0A4F63', // blue-teal
-        '#1F6F8B', // medium blue
-        '#5F6CAF', // muted purple
-        '#C06C84'  // soft pink-purple
+        '#0EA5E9',
+        '#0284C7',
+        '#2563EB',
+        '#7C3AED',
+        '#DB2777'
       ];
 
       function resizeCanvas() {
@@ -232,148 +173,42 @@
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
-      window.addEventListener('scroll', () => {
-        scrollY = window.scrollY || window.pageYOffset || 0;
-      });
-
-      function createLine(isForeground = false) {
-        const direction = 1; // 1 = left -> right (directional flow)
-
-        const vertical = Math.random() > 0.6; // mostly horizontal
-        const baseSpeed = isForeground ? 0.35 : 0.18;
-        const speedVariance = isForeground ? 0.25 : 0.15;
-
-        const speed = baseSpeed + Math.random() * speedVariance;
-
-        const lengthBase = isForeground ? 220 : 260;
-        const lengthVar = isForeground ? 140 : 200;
-
-        const lineWidthBase = isForeground ? 1.2 : 0.7;
-        const lineWidthVar = isForeground ? 0.6 : 0.5;
-
-        const startX = direction === 1 ? -50 : width + 50;
-        const startY = Math.random() * height;
-
+      function createLine() {
         return {
-          x: vertical ? Math.random() * width : startX,
-          y: vertical ? -50 : startY,
-          length: lengthBase + Math.random() * lengthVar,
-          speed,
-          opacity: 0,
-          fadeIn: true,
-          vertical,
-          direction,
+          x: Math.random() * width,
+          y: Math.random() * height,
+          length: 180 + Math.random() * 200,
+          speed: 0.4 + Math.random() * 0.6,
+          opacity: 0.4 + Math.random() * 0.4,
           color: colors[Math.floor(Math.random() * colors.length)],
-          lineWidth: lineWidthBase + Math.random() * lineWidthVar,
-          maxOpacity: isForeground ? (0.6 + Math.random() * 0.25) : (0.25 + Math.random() * 0.2),
-          foreground: isForeground
+          lineWidth: 1 + Math.random() * 1.2
         };
       }
 
-      function initLines() {
-        linesBack = [];
-        linesFront = [];
-        const backCount = 18;   // reduced density
-        const frontCount = 14;  // reduced density
-
-        for (let i = 0; i < backCount; i++) {
-          const l = createLine(false);
-          l.opacity = Math.random() * l.maxOpacity;
-          l.fadeIn = Math.random() > 0.5;
-          linesBack.push(l);
-        }
-
-        for (let i = 0; i < frontCount; i++) {
-          const l = createLine(true);
-          l.opacity = Math.random() * l.maxOpacity;
-          l.fadeIn = Math.random() > 0.5;
-          linesFront.push(l);
-        }
-      }
-
-      initLines();
-
-      function updateLine(line) {
-        const parallaxFactor = line.foreground ? 0.02 : 0.01;
-        const scrollOffset = scrollY * parallaxFactor;
-
-        if (line.vertical) {
-          line.y += line.speed;
-          line.x += line.direction * 0.05;
-        } else {
-          line.x += line.speed * line.direction;
-          line.y += Math.sin((line.x + scrollOffset) * 0.0015) * 0.15;
-        }
-
-        // Smooth fade-in/out curves
-        if (line.fadeIn) {
-          line.opacity += 0.0035;
-          if (line.opacity >= line.maxOpacity) {
-            line.fadeIn = false;
-          }
-        } else {
-          line.opacity -= 0.0015;
-        }
-
-        if (
-          line.opacity <= 0 ||
-          line.x < -line.length - 100 ||
-          line.x > width + line.length + 100 ||
-          line.y > height + line.length + 100
-        ) {
-          Object.assign(line, createLine(line.foreground));
-        }
-      }
-
-      function drawLine(line) {
-        if (line.opacity <= 0) return;
-
-        ctx.save();
-
-        // Parallax translation
-        const parallaxFactor = line.foreground ? 0.05 : 0.03;
-        ctx.translate(0, scrollY * parallaxFactor);
-
-        ctx.beginPath();
-        ctx.strokeStyle = line.color;
-        ctx.globalAlpha = line.opacity;
-
-        // Glow trails
-        ctx.shadowColor = line.color;
-        ctx.shadowBlur = line.foreground ? 16 : 10;
-
-        ctx.lineWidth = line.lineWidth;
-
-        if (line.vertical) {
-          ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x, line.y + line.length);
-        } else {
-          ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x + line.length * line.direction, line.y);
-        }
-
-        ctx.stroke();
-        ctx.restore();
-      }
+      for (let i = 0; i < 35; i++) lines.push(createLine());
 
       function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        // Background layer
-        ctx.globalCompositeOperation = 'lighter';
-        linesBack.forEach(line => {
-          updateLine(line);
-          drawLine(line);
-        });
+        lines.forEach(line => {
+          ctx.beginPath();
+          ctx.strokeStyle = line.color;
+          ctx.globalAlpha = line.opacity;
+          ctx.lineWidth = line.lineWidth;
 
-        // Foreground layer
-        linesFront.forEach(line => {
-          updateLine(line);
-          drawLine(line);
-        });
+          ctx.shadowColor = line.color;
+          ctx.shadowBlur = 12;
 
-        ctx.globalAlpha = 1;
-        ctx.globalCompositeOperation = 'source-over';
+          ctx.moveTo(line.x, line.y);
+          ctx.lineTo(line.x + line.length, line.y);
+          ctx.stroke();
+
+          line.x += line.speed;
+          if (line.x > width + line.length) {
+            Object.assign(line, createLine());
+            line.x = -line.length;
+          }
+        });
 
         requestAnimationFrame(animate);
       }
