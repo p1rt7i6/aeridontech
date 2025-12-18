@@ -1,60 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AeridonTech</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #073B4C;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      color: #073B4C;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #118AB2;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      color: #073B4C;
+      margin-bottom: 1rem;
+    }
+
+    .hero .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .hero button.primary {
+      background: #073B4C;
+      color: white;
+    }
+
+    .hero button.secondary {
+      background: white;
+      color: #073B4C;
+      border: 2px solid #073B4C;
+    }
+
+    .hero button:hover {
+      opacity: 0.9;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      animation: bounce 2s infinite;
+      font-size: 2rem;
+      color: #073B4C;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
 </head>
+<body>
+  <canvas id="bgCanvas"></canvas>
 
-<body class="bg-white text-gray-900">
-  <!-- Navbar -->
-  <header class="border-b">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center py-4 px-4">
-     <div class="flex items-center space-x-3">
-  <img src="assets/logo.png" alt="AeridonTech Logo" class="h-8 w-auto object-contain">
-  <span class="text-2xl font-semibold">AeridonTech</span>
-</div>
-
-      <div class="space-x-6">
-        <a href="index.html" class="hover:text-gray-600">Home</a>
-        <a href="about.html" class="hover:text-gray-600">About</a>
-        <a href="services.html" class="hover:text-gray-600">Services</a>
-        <a href="contact.html" class="hover:text-gray-600">Contact</a>
-      </div>
+  <header>
+    <div class="logo">AERIDONTECH</div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#signin">Sign In</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="max-w-6xl mx-auto px-4 py-24 text-center">
-    <h2 class="text-4xl font-bold mb-6">Building Digital Solutions with Precision</h2>
-    <p class="text-lg text-gray-600 mb-8">
-      AeridonTech delivers clean, modern, and reliable technology solutions for businesses and individuals.
-    </p>
-    <a href="services.html" class="px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800">
-      Explore Services
-    </a>
-  </section>
+  <div class="hero">
+    <h1>Design. Develop. Deliver.</h1>
+    <div class="buttons">
+      <button class="primary">Our Services</button>
+      <button class="secondary">Contact Us</button>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </div>
 
-  <!-- Features -->
-  <section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-3 gap-10">
-    <div class="p-6 border rounded-lg">
-      <h3 class="text-xl font-semibold mb-2">Modern Web Development</h3>
-      <p class="text-gray-600">Clean, responsive, and scalable websites built with modern tools.</p>
-    </div>
-    <div class="p-6 border rounded-lg">
-      <h3 class="text-xl font-semibold mb-2">IT & Systems Support</h3>
-      <p class="text-gray-600">Reliable support for hardware, software, and business systems.</p>
-    </div>
-    <div class="p-6 border rounded-lg">
-      <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
-      <p class="text-gray-600">Streamlining workflows to improve efficiency and reduce manual work.</p>
-    </div>
-  </section>
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let lines = [];
 
-  <!-- Footer -->
-  <footer class="border-t py-6 text-center text-gray-600">
-    © 2025 AeridonTech. All rights reserved.
-  </footer>
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const colors = ['#118AB2', '#FFD166', '#EF476F', '#06D6A0', '#073B4C'];
+
+    function createLine() {
+      const vertical = Math.random() > 0.5;
+      return {
+        x: vertical ? Math.random() * canvas.width : 0,
+        y: vertical ? 0 : Math.random() * canvas.height,
+        length: 100 + Math.random() * 200,
+        speed: 0.5 + Math.random(),
+        opacity: 0,
+        fadeIn: true,
+        vertical,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      };
+    }
+
+    for (let i = 0; i < 30; i++) {
+      lines.push(createLine());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      lines.forEach((line) => {
+        ctx.beginPath();
+        ctx.strokeStyle = line.color;
+        ctx.globalAlpha = line.opacity;
+        ctx.lineWidth = 2;
+
+        if (line.vertical) {
+          ctx.moveTo(line.x, line.y);
+          ctx.lineTo(line.x, line.y + line.length);
+          line.y += line.speed;
+        } else {
+          ctx.moveTo(line.x, line.y);
+          ctx.lineTo(line.x + line.length, line.y);
+          line.x += line.speed;
+        }
+
+        ctx.stroke();
+
+        if (line.fadeIn) {
+          line.opacity += 0.01;
+          if (line.opacity >= 0.6) line.fadeIn = false;
+        } else {
+          line.opacity -= 0.005;
+        }
+
+        if (line.opacity <= 0 || line.x > canvas.width || line.y > canvas.height) {
+          Object.assign(line, createLine());
+        }
+      });
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
