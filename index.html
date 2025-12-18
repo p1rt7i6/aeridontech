@@ -150,73 +150,85 @@
   </footer>
 
   <!-- LINE ANIMATION SCRIPT -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const canvas = document.getElementById('bgCanvas');
-      const ctx = canvas.getContext('2d');
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
 
-      let width, height;
-      let lines = [];
+  let width, height;
+  let lines = [];
 
-      const colors = [
-        '#0284C7',
-        '#0EA5E9',
-        '#2563EB',
-        '#7C3AED',
-        '#DB2777'
-      ];
+  const colors = [
+    '#0284C7',
+    '#0EA5E9',
+    '#2563EB',
+    '#7C3AED',
+    '#DB2777'
+  ];
 
-      function resizeCanvas() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+  function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function createLine() {
+    const angle = Math.random() * Math.PI * 2; // random direction
+    const speed = 0.1 + Math.random() * 0.25; // slow movement
+
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      length: 80 + Math.random() * 120,
+      speedX: Math.cos(angle) * speed,
+      speedY: Math.sin(angle) * speed,
+      opacity: 0.25 + Math.random() * 0.35, // soft
+      color: colors[Math.floor(Math.random() * colors.length)],
+      lineWidth: 1 + Math.random() * 1
+    };
+  }
+
+  for (let i = 0; i < 45; i++) lines.push(createLine());
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    lines.forEach(line => {
+      ctx.beginPath();
+      ctx.strokeStyle = line.color;
+      ctx.globalAlpha = line.opacity;
+      ctx.lineWidth = line.lineWidth;
+
+      // NO GLOW
+      ctx.shadowBlur = 0;
+
+      // Draw line in its direction
+      ctx.moveTo(line.x, line.y);
+      ctx.lineTo(line.x + line.speedX * line.length, line.y + line.speedY * line.length);
+      ctx.stroke();
+
+      // Move line
+      line.x += line.speedX;
+      line.y += line.speedY;
+
+      // Reset when out of screen
+      if (
+        line.x < -200 || line.x > width + 200 ||
+        line.y < -200 || line.y > height + 200
+      ) {
+        Object.assign(line, createLine());
       }
-
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-
-      function createLine() {
-        return {
-          x: Math.random() * width,
-          y: Math.random() * height,
-          length: 200 + Math.random() * 250,
-          speed: 0.5 + Math.random() * 0.8,
-          opacity: 0.5 + Math.random() * 0.4,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          lineWidth: 1.2 + Math.random() * 1.4
-        };
-      }
-
-      for (let i = 0; i < 40; i++) lines.push(createLine());
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-
-        lines.forEach(line => {
-          ctx.beginPath();
-          ctx.strokeStyle = line.color;
-          ctx.globalAlpha = line.opacity;
-          ctx.lineWidth = line.lineWidth;
-
-          ctx.shadowColor = line.color;
-          ctx.shadowBlur = 14;
-
-          ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x + line.length, line.y);
-          ctx.stroke();
-
-          line.x += line.speed;
-          if (line.x > width + line.length) {
-            Object.assign(line, createLine());
-            line.x = -line.length;
-          }
-        });
-
-        requestAnimationFrame(animate);
-      }
-
-      animate();
     });
-  </script>
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+});
+</script>
+
 
 </body>
 </html>
