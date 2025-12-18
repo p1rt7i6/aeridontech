@@ -142,78 +142,124 @@
   </footer>
 
   <!-- Animation Script -->
-  <script>
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let lines = [];
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+  console.log("AeridonTech site loaded");
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+  /* -------------------------------
+     SERVICE CARD TOGGLE FUNCTION
+  --------------------------------*/
+  function toggleService(selectedCard) {
+    const allCards = document.querySelectorAll(".service-card");
 
-    const colors = ['#118AB2', '#FFD166', '#EF476F', '#06D6A0', '#073B4C'];
+    allCards.forEach(card => {
+      const info = card.querySelector(".service-info");
 
-    function createLine() {
-      const vertical = Math.random() > 0.5;
-      return {
-        x: vertical ? Math.random() * canvas.width : 0,
-        y: vertical ? 0 : Math.random() * canvas.height,
-        length: 100 + Math.random() * 200,
-        speed: 0.5 + Math.random(),
-        opacity: 0,
-        fadeIn: true,
-        vertical,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      };
-    }
+      if (card === selectedCard) {
+        const isOpen = info.style.maxHeight && info.style.maxHeight !== "0px";
 
-    for (let i = 0; i < 30; i++) {
-      lines.push(createLine());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      lines.forEach((line) => {
-        ctx.beginPath();
-        ctx.strokeStyle = line.color;
-        ctx.globalAlpha = line.opacity;
-        ctx.lineWidth = 2;
-
-        if (line.vertical) {
-          ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x, line.y + line.length);
-          line.y += line.speed;
+        if (isOpen) {
+          info.style.maxHeight = "0px";
+          info.style.opacity = "0";
+          card.style.backgroundColor = "#ffffff";
+          card.style.color = "#000000";
         } else {
-          ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x + line.length, line.y);
-          line.x += line.speed;
+          info.style.maxHeight = info.scrollHeight + "px";
+          info.style.opacity = "1";
+          card.style.backgroundColor = "#073B4C";
+          card.style.color = "#ffffff";
         }
+      } else {
+        info.style.maxHeight = "0px";
+        info.style.opacity = "0";
+        card.style.backgroundColor = "#ffffff";
+        card.style.color = "#000000";
+      }
+    });
+  }
 
-        ctx.stroke();
+  // Make function available globally
+  window.toggleService = toggleService;
 
-        if (line.fadeIn) {
-          line.opacity += 0.01;
-          if (line.opacity >= 0.6) line.fadeIn = false;
-        } else {
-          line.opacity -= 0.005;
-        }
 
-        if (line.opacity <= 0 || line.x > canvas.width || line.y > canvas.height) {
-          Object.assign(line, createLine());
-        }
-      });
+  /* -------------------------------
+     BACKGROUND ANIMATION
+  --------------------------------*/
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let lines = [];
 
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(animate);
-    }
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-    animate();
-  </script>
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const colors = ['#118AB2', '#FFD166', '#EF476F', '#06D6A0', '#073B4C'];
+
+  function createLine() {
+    const vertical = Math.random() > 0.5;
+    return {
+      x: vertical ? Math.random() * canvas.width : 0,
+      y: vertical ? 0 : Math.random() * canvas.height,
+      length: 100 + Math.random() * 200,
+      speed: 0.5 + Math.random(),
+      opacity: 0,
+      fadeIn: true,
+      vertical,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    };
+  }
+
+  for (let i = 0; i < 30; i++) {
+    lines.push(createLine());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    lines.forEach((line) => {
+      ctx.beginPath();
+      ctx.strokeStyle = line.color;
+      ctx.globalAlpha = line.opacity;
+      ctx.lineWidth = 2;
+
+      if (line.vertical) {
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(line.x, line.y + line.length);
+        line.y += line.speed;
+      } else {
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(line.x + line.length, line.y);
+        line.x += line.speed;
+      }
+
+      ctx.stroke();
+
+      if (line.fadeIn) {
+        line.opacity += 0.01;
+        if (line.opacity >= 0.6) line.fadeIn = false;
+      } else {
+        line.opacity -= 0.005;
+      }
+
+      if (line.opacity <= 0 || line.x > canvas.width || line.y > canvas.height) {
+        Object.assign(line, createLine());
+      }
+    });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+});
+</script>
+
 
 </body>
 </html>
