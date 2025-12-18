@@ -7,29 +7,22 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-body {
-  background: transparent;
-}
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      background: white;
-    }
-
+    /* Background canvas must stay visible */
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Body must NOT override canvas */
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: transparent;
     }
 
     .hero {
