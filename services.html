@@ -1,48 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services — AeridonTech</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-3 gap-10">
 
-<body class="bg-white text-gray-900">
-  <header class="border-b">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center py-4 px-4">
-      <h1 class="text-2xl font-semibold">AeridonTech</h1>
-      <div class="space-x-6">
-        <a href="index.html" class="hover:text-gray-600">Home</a>
-        <a href="about.html" class="hover:text-gray-600">About</a>
-        <a href="services.html" class="hover:text-gray-600">Services</a>
-        <a href="contact.html" class="hover:text-gray-600">Contact</a>
-      </div>
-    </nav>
-  </header>
+  <!-- Modern Web Development -->
+  <div class="service-card p-6 border rounded-lg cursor-pointer transition-all duration-500"
+       onclick="toggleService(this)">
+    <h3 class="text-xl font-semibold mb-2">Modern Web Development</h3>
+    <p class="text-gray-600">Clean, responsive, and scalable websites built with modern tools.</p>
 
-  <section class="max-w-6xl mx-auto px-4 py-20">
-    <h2 class="text-4xl font-bold mb-10">Our Services</h2>
-
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="p-6 border rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">Web Development</h3>
-        <p class="text-gray-600">Modern, responsive websites built with clean code and scalable architecture.</p>
-      </div>
-
-      <div class="p-6 border rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">IT Support</h3>
-        <p class="text-gray-600">Hardware, software, and systems support for businesses and individuals.</p>
-      </div>
-
-      <div class="p-6 border rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
-        <p class="text-gray-600">Automating workflows to reduce manual work and improve efficiency.</p>
-      </div>
+    <div class="service-info max-h-0 opacity-0 overflow-hidden transition-all duration-500">
+      <p class="mt-4">
+        We craft modern, responsive, and elegant websites that deliver speed, clarity, and a seamless user experience.
+        Our solutions are secure, scalable, and built using industry‑leading technologies and best‑practice development standards.
+        Each website is designed to attract customers, strengthen your brand, and support long‑term business growth.
+        We focus on clean, premium design that looks great on every device, backed by high‑performance engineering
+        for speed, stability, and conversions. Our future‑ready approach ensures your site can scale and adapt as your business evolves.
+        With intuitive user‑experience design, SEO‑smart optimization, and full‑stack development capabilities,
+        we deliver complete end‑to‑end web solutions tailored to your goals, audience, and brand identity.
+      </p>
     </div>
-  </section>
+  </div>
 
-  <footer class="border-t py-6 text-center text-gray-600">
-    © 2025 AeridonTech. All rights reserved.
-  </footer>
-</body>
-</html>
+  <!-- IT & Systems Support -->
+  <div class="service-card p-6 border rounded-lg cursor-pointer transition-all duration-500"
+       onclick="toggleService(this)">
+    <h3 class="text-xl font-semibold mb-2">IT & Systems Support</h3>
+    <p class="text-gray-600">Reliable support for hardware, software, and business systems.</p>
+
+    <div class="service-info max-h-0 opacity-0 overflow-hidden transition-all duration-500">
+      <p class="mt-4">
+        We provide dependable IT support for your devices, networks, and business systems, helping you prevent downtime
+        and resolve issues quickly. From troubleshooting and maintenance to upgrades and configuration,
+        we ensure your technology stays stable, secure, and aligned with your daily operations.
+      </p>
+    </div>
+  </div>
+
+  <!-- Business Automation -->
+  <div class="service-card p-6 border rounded-lg cursor-pointer transition-all duration-500"
+       onclick="toggleService(this)">
+    <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
+    <p class="text-gray-600">Streamlining workflows to improve efficiency and reduce manual work.</p>
+
+    <div class="service-info max-h-0 opacity-0 overflow-hidden transition-all duration-500">
+      <p class="mt-4">
+        We analyze your processes and identify tasks that can be automated to save time and reduce errors.
+        From reports and approvals to notifications and data entry, we design automation workflows
+        that free your team to focus on higher‑value work and help your business operate more efficiently.
+      </p>
+    </div>
+  </div>
+
+</section>
