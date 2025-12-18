@@ -7,259 +7,379 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Background canvas must stay visible */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      pointer-events: none;
+    /* Global */
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Body must NOT override canvas */
     body, html {
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      background: transparent;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #020617;
+      color: #0f172a;
     }
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 1;
+    /* Background canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      pointer-events: none;
     }
 
-    .hero h1 {
-      font-size: 3rem;
-      color: #073B4C;
-      margin-bottom: 1rem;
+    /* Overlay gradient on top of canvas, under content */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(244, 114, 182, 0.16), transparent 55%),
+                  linear-gradient(to bottom, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.98));
     }
 
-    .hero .buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .hero button {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .hero button.primary {
-      background: #073B4C;
-      color: white;
-    }
-
-    .hero button.secondary {
-      background: white;
-      color: #073B4C;
-      border: 2px solid #073B4C;
-    }
-
-    .hero button:hover {
+    /* Hero glow behind text */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(circle at center, rgba(96, 165, 250, 0.25), transparent 60%),
+        radial-gradient(circle at center, rgba(236, 72, 153, 0.16), transparent 65%);
+      filter: blur(18px);
       opacity: 0.9;
     }
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      font-size: 2rem;
-      color: #073B4C;
-      animation: bounce 2s infinite;
-    }
-
+    /* Simple bounce keyframes (used by Tailwind's animate-bounce utility) */
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
+      50% { transform: translateY(8px); }
     }
   </style>
 </head>
 
-<body>
+<body class="text-slate-100">
 
-  <!-- Background Animation -->
+  <!-- Background layers -->
   <canvas id="bgCanvas"></canvas>
+  <div class="bg-overlay"></div>
 
   <!-- Navbar -->
-  <header class="border-b bg-white/80 backdrop-blur-sm fixed top-0 left-0 w-full z-20">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center py-4 px-4">
+  <header class="border-b border-slate-800 bg-slate-900/70 backdrop-blur-md fixed top-0 left-0 w-full z-20">
+    <nav class="max-w-6xl mx-auto flex justify-between items-center py-3 px-4 md:px-6">
+      <!-- Logo + tagline -->
       <div class="flex items-center space-x-3">
-        <img src="assets/logo.png" alt="AeridonTech Logo" class="h-8 w-auto object-contain">
-        <span class="text-2xl font-semibold">AeridonTech</span>
+        <img src="assets/logo.png" alt="AeridonTech Logo"
+             class="h-8 w-auto object-contain drop-shadow-lg">
+        <div class="flex flex-col leading-tight">
+          <span class="text-lg md:text-xl font-semibold tracking-tight">
+            AeridonTech
+          </span>
+          <span class="text-[10px] md:text-xs text-slate-400">
+            Smart solutions. Modern design.
+          </span>
+        </div>
       </div>
 
-      <div class="space-x-6">
-        <a href="index.html" class="hover:text-gray-600">Home</a>
-        <a href="about.html" class="hover:text-gray-600">About</a>
-        <a href="services.html" class="hover:text-gray-600">Services</a>
-        <a href="contact.html" class="hover:text-gray-600">Contact</a>
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-6 text-sm">
+        <a href="index.html" class="text-slate-300 hover:text-white transition-colors duration-200">Home</a>
+        <a href="about.html" class="text-slate-300 hover:text-white transition-colors duration-200">About</a>
+        <a href="services.html" class="text-slate-300 hover:text-white transition-colors duration-200">Services</a>
+        <a href="contact.html" class="text-slate-300 hover:text-white transition-colors duration-200">Contact</a>
+      </div>
+
+      <!-- Mobile Menu Icon (non-functional placeholder for now) -->
+      <div class="md:hidden text-3xl text-slate-100">
+        ☰
       </div>
     </nav>
   </header>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <h1>Design. Develop. Deliver.</h1>
+  <section
+    class="relative min-h-[80vh] md:min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 md:pt-32 overflow-hidden">
+    <!-- Hero glow layer -->
+    <div class="hero-glow"></div>
 
-    <div class="buttons">
-      <button class="primary" onclick="location.href='services.html'">Our Services</button>
-      <button class="secondary" onclick="location.href='contact.html'">Contact Us</button>
+    <div class="relative max-w-3xl mx-auto">
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-50 mb-4">
+        Design. Develop. Deliver.
+      </h1>
+      <p class="text-sm md:text-base text-slate-300 max-w-xl mx-auto mb-8">
+        Clean interfaces, modern experiences, and smart systems crafted for businesses that expect more from their technology.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-2">
+        <button
+          class="px-6 py-3 text-sm md:text-base rounded-full bg-sky-500 hover:bg-sky-400 text-white font-medium
+                 shadow-lg shadow-sky-500/30 hover:shadow-sky-400/40
+                 transform hover:-translate-y-[1px] hover:scale-[1.02]
+                 transition-all duration-200"
+          onclick="location.href='services.html'">
+          Explore Services
+        </button>
+
+        <button
+          class="px-6 py-3 text-sm md:text-base rounded-full border border-slate-500/80 text-slate-100 bg-slate-900/40
+                 hover:border-sky-400 hover:bg-slate-900/70
+                 backdrop-blur-md
+                 transform hover:-translate-y-[1px] hover:scale-[1.02]
+                 transition-all duration-200"
+          onclick="location.href='contact.html'">
+          Get in Touch
+        </button>
+      </div>
     </div>
 
-    <div class="scroll-indicator">↓</div>
+    <div class="text-3xl text-slate-400 mt-10 animate-bounce">
+      ↓
+    </div>
   </section>
 
   <!-- Features Section -->
-  <section class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-3 gap-10 bg-white">
-    <div class="p-6 border rounded-lg shadow-sm">
-      <h3 class="text-xl font-semibold mb-2">Modern Web Development</h3>
-      <p class="text-gray-600">Clean, responsive, and scalable websites built with modern tools.</p>
-    </div>
+  <section class="max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-20">
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+      <!-- Card 1 -->
+      <div
+        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
+               backdrop-blur-xl overflow-hidden
+               shadow-lg shadow-slate-950/40
+               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-br from-sky-500/15 via-transparent to-fuchsia-500/20"></div>
+        <div class="relative p-6 md:p-7">
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
+            Modern Web Experiences
+          </h3>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            Sleek, responsive, and interactive websites that feel premium on every device, crafted with performance and detail in mind.
+          </p>
+        </div>
+      </div>
 
-    <div class="p-6 border rounded-lg shadow-sm">
-      <h3 class="text-xl font-semibold mb-2">IT & Systems Support</h3>
-      <p class="text-gray-600">Reliable support for hardware, software, and business systems.</p>
-    </div>
+      <!-- Card 2 -->
+      <div
+        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
+               backdrop-blur-xl overflow-hidden
+               shadow-lg shadow-slate-950/40
+               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-br from-emerald-400/15 via-transparent to-sky-500/20"></div>
+        <div class="relative p-6 md:p-7">
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
+            Smart IT & Systems
+          </h3>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            Reliable infrastructure, secure setups, and streamlined workflows that keep your business running smoothly and confidently.
+          </p>
+        </div>
+      </div>
 
-    <div class="p-6 border rounded-lg shadow-sm">
-      <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
-      <p class="text-gray-600">Streamlining workflows to improve efficiency and reduce manual work.</p>
+      <!-- Card 3 -->
+      <div
+        class="group relative rounded-2xl border border-slate-700/70 bg-slate-900/40
+               backdrop-blur-xl overflow-hidden
+               shadow-lg shadow-slate-950/40
+               transition-transform duration-200 transform hover:-translate-y-1 hover:scale-[1.01]">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-br from-fuchsia-400/15 via-transparent to-sky-400/20"></div>
+        <div class="relative p-6 md:p-7">
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-50">
+            Automation & Efficiency
+          </h3>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            Custom tools and automations that reduce manual work, remove friction, and give you more time to focus on growth.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t py-6 text-center text-gray-600">
-    © 2025 AeridonTech. All rights reserved.
+  <footer class="border-t border-slate-800 py-6 text-center text-xs md:text-sm text-slate-500 bg-slate-950/90">
+    © 2025 AeridonTech — Crafted with precision. Powered by innovation.
   </footer>
 
-  <!-- Merged Script: Services + Background Animation -->
+  <!-- Animation Script -->
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById('bgCanvas');
+      const ctx = canvas.getContext('2d');
 
-    console.log("AeridonTech site loaded");
+      let width, height;
+      let linesBack = [];
+      let linesFront = [];
+      let scrollY = 0;
 
-    /* -------------------------------
-       SERVICE CARD TOGGLE FUNCTION
-    --------------------------------*/
-    function toggleService(selectedCard) {
-      const allCards = document.querySelectorAll(".service-card");
+      const colors = [
+        '#073B4C', // deep teal
+        '#0A4F63', // blue-teal
+        '#1F6F8B', // medium blue
+        '#5F6CAF', // muted purple
+        '#C06C84'  // soft pink-purple
+      ];
 
-      allCards.forEach(card => {
-        const info = card.querySelector(".service-info");
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
 
-        if (card === selectedCard) {
-          const isOpen = info.style.maxHeight && info.style.maxHeight !== "0px";
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
 
-          if (isOpen) {
-            info.style.maxHeight = "0px";
-            info.style.opacity = "0";
-            card.style.backgroundColor = "#ffffff";
-            card.style.color = "#000000";
-          } else {
-            info.style.maxHeight = info.scrollHeight + "px";
-            info.style.opacity = "1";
-            card.style.backgroundColor = "#073B4C";
-            card.style.color = "#ffffff";
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY || window.pageYOffset || 0;
+      });
+
+      function createLine(isForeground = false) {
+        const direction = 1; // 1 = left -> right (directional flow)
+
+        const vertical = Math.random() > 0.6; // mostly horizontal
+        const baseSpeed = isForeground ? 0.35 : 0.18;
+        const speedVariance = isForeground ? 0.25 : 0.15;
+
+        const speed = baseSpeed + Math.random() * speedVariance;
+
+        const lengthBase = isForeground ? 220 : 260;
+        const lengthVar = isForeground ? 140 : 200;
+
+        const lineWidthBase = isForeground ? 1.2 : 0.7;
+        const lineWidthVar = isForeground ? 0.6 : 0.5;
+
+        const startX = direction === 1 ? -50 : width + 50;
+        const startY = Math.random() * height;
+
+        return {
+          x: vertical ? Math.random() * width : startX,
+          y: vertical ? -50 : startY,
+          length: lengthBase + Math.random() * lengthVar,
+          speed,
+          opacity: 0,
+          fadeIn: true,
+          vertical,
+          direction,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          lineWidth: lineWidthBase + Math.random() * lineWidthVar,
+          maxOpacity: isForeground ? (0.6 + Math.random() * 0.25) : (0.25 + Math.random() * 0.2),
+          foreground: isForeground
+        };
+      }
+
+      function initLines() {
+        linesBack = [];
+        linesFront = [];
+        const backCount = 18;   // reduced density
+        const frontCount = 14;  // reduced density
+
+        for (let i = 0; i < backCount; i++) {
+          const l = createLine(false);
+          l.opacity = Math.random() * l.maxOpacity;
+          l.fadeIn = Math.random() > 0.5;
+          linesBack.push(l);
+        }
+
+        for (let i = 0; i < frontCount; i++) {
+          const l = createLine(true);
+          l.opacity = Math.random() * l.maxOpacity;
+          l.fadeIn = Math.random() > 0.5;
+          linesFront.push(l);
+        }
+      }
+
+      initLines();
+
+      function updateLine(line) {
+        const parallaxFactor = line.foreground ? 0.02 : 0.01;
+        const scrollOffset = scrollY * parallaxFactor;
+
+        if (line.vertical) {
+          line.y += line.speed;
+          line.x += line.direction * 0.05;
+        } else {
+          line.x += line.speed * line.direction;
+          line.y += Math.sin((line.x + scrollOffset) * 0.0015) * 0.15;
+        }
+
+        // Smooth fade-in/out curves
+        if (line.fadeIn) {
+          line.opacity += 0.0035;
+          if (line.opacity >= line.maxOpacity) {
+            line.fadeIn = false;
           }
         } else {
-          info.style.maxHeight = "0px";
-          info.style.opacity = "0";
-          card.style.backgroundColor = "#ffffff";
-          card.style.color = "#000000";
+          line.opacity -= 0.0015;
         }
-      });
-    }
 
-    window.toggleService = toggleService;
+        if (
+          line.opacity <= 0 ||
+          line.x < -line.length - 100 ||
+          line.x > width + line.length + 100 ||
+          line.y > height + line.length + 100
+        ) {
+          Object.assign(line, createLine(line.foreground));
+        }
+      }
 
+      function drawLine(line) {
+        if (line.opacity <= 0) return;
 
-    /* -------------------------------
-       BACKGROUND ANIMATION
-    --------------------------------*/
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let lines = [];
+        ctx.save();
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+        // Parallax translation
+        const parallaxFactor = line.foreground ? 0.05 : 0.03;
+        ctx.translate(0, scrollY * parallaxFactor);
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const colors = ['#118AB2', '#FFD166', '#EF476F', '#06D6A0', '#073B4C'];
-
-    function createLine() {
-      const vertical = Math.random() > 0.5;
-      return {
-        x: vertical ? Math.random() * canvas.width : 0,
-        y: vertical ? 0 : Math.random() * canvas.height,
-        length: 100 + Math.random() * 200,
-        speed: 0.5 + Math.random(),
-        opacity: 0,
-        fadeIn: true,
-        vertical,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      };
-    }
-
-    for (let i = 0; i < 30; i++) {
-      lines.push(createLine());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      lines.forEach((line) => {
         ctx.beginPath();
         ctx.strokeStyle = line.color;
         ctx.globalAlpha = line.opacity;
-        ctx.lineWidth = 2;
+
+        // Glow trails
+        ctx.shadowColor = line.color;
+        ctx.shadowBlur = line.foreground ? 16 : 10;
+
+        ctx.lineWidth = line.lineWidth;
 
         if (line.vertical) {
           ctx.moveTo(line.x, line.y);
           ctx.lineTo(line.x, line.y + line.length);
-          line.y += line.speed;
         } else {
           ctx.moveTo(line.x, line.y);
-          ctx.lineTo(line.x + line.length, line.y);
-          line.x += line.speed;
+          ctx.lineTo(line.x + line.length * line.direction, line.y);
         }
 
         ctx.stroke();
+        ctx.restore();
+      }
 
-        if (line.fadeIn) {
-          line.opacity += 0.01;
-          if (line.opacity >= 0.6) line.fadeIn = false;
-        } else {
-          line.opacity -= 0.005;
-        }
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
 
-        if (line.opacity <= 0 || line.x > canvas.width || line.y > canvas.height) {
-          Object.assign(line, createLine());
-        }
-      });
+        // Background layer
+        ctx.globalCompositeOperation = 'lighter';
+        linesBack.forEach(line => {
+          updateLine(line);
+          drawLine(line);
+        });
 
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(animate);
-    }
+        // Foreground layer
+        linesFront.forEach(line => {
+          updateLine(line);
+          drawLine(line);
+        });
 
-    animate();
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
 
-  });
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    });
   </script>
 
 </body>
