@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AeridonTech</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>Welcome to AeridonTech</h1>
-  <p>Your site is now live.</p>
+
+<body class="bg-white text-gray-900">
+  <!-- Navbar -->
+  <header class="border-b">
+    <nav class="max-w-6xl mx-auto flex justify-between items-center py-4 px-4">
+      <h1 class="text-2xl font-semibold">AeridonTech</h1>
+      <div class="space-x-6">
+        <a href="index.html" class="hover:text-gray-600">Home</a>
+        <a href="about.html" class="hover:text-gray-600">About</a>
+        <a href="services.html" class="hover:text-gray-600">Services</a>
+        <a href="contact.html" class="hover:text-gray-600">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-6xl mx-auto px-4 py-24 text-center">
+    <h2 class="text-4xl font-bold mb-6">Building Digital Solutions with Precision</h2>
+    <p class="text-lg text-gray-600 mb-8">
+      AeridonTech delivers clean, modern, and reliable technology solutions for businesses and individuals.
+    </p>
+    <a href="services.html" class="px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800">
+      Explore Services
+    </a>
+  </section>
+
+  <!-- Features -->
+  <section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-3 gap-10">
+    <div class="p-6 border rounded-lg">
+      <h3 class="text-xl font-semibold mb-2">Modern Web Development</h3>
+      <p class="text-gray-600">Clean, responsive, and scalable websites built with modern tools.</p>
+    </div>
+    <div class="p-6 border rounded-lg">
+      <h3 class="text-xl font-semibold mb-2">IT & Systems Support</h3>
+      <p class="text-gray-600">Reliable support for hardware, software, and business systems.</p>
+    </div>
+    <div class="p-6 border rounded-lg">
+      <h3 class="text-xl font-semibold mb-2">Business Automation</h3>
+      <p class="text-gray-600">Streamlining workflows to improve efficiency and reduce manual work.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t py-6 text-center text-gray-600">
+    © 2025 AeridonTech. All rights reserved.
+  </footer>
 </body>
 </html>
