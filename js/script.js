@@ -2,17 +2,14 @@
  * 1. CARD TOGGLE SYSTEM
  */
 function toggleCard(element) {
-    console.log("Card Clicked:", element); // Debugging line
-    
-    // Check if this card is already open
     const isOpen = element.classList.contains('open');
     
-    // Close ALL other cards
+    // Close other cards for cleaner focus
     document.querySelectorAll('.service-card').forEach(card => {
         card.classList.remove('open');
     });
     
-    // If the card was not open, open it
+    // Toggle current card
     if (!isOpen) {
         element.classList.add('open');
     }
@@ -28,7 +25,7 @@ const fullEmail = "aeridontech@gmail.com";
 
 if (copyBtn) {
     copyBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevents triggers on parent elements
+        e.stopPropagation(); // Prevents card toggle if button is inside a card
         navigator.clipboard.writeText(fullEmail).then(() => {
             emailText.innerText = "Copied!";
             copyStatus.style.opacity = "1";
@@ -41,7 +38,7 @@ if (copyBtn) {
 }
 
 /**
- * 3. BACKGROUND ANIMATION
+ * 3. BACKGROUND ANIMATION (Optimized)
  */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
