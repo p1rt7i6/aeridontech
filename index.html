@@ -1,154 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AeridonTech | Design. Develop. Deliver.</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
- <style>
-  /* ... your existing styles ... */
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AeridonTech | Design. Develop. Deliver.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1e293b; overflow-x: hidden; }
+        
+        canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
 
-  .service-info {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease;
-  }
+        header, section, footer { position: relative; z-index: 10; }
 
-  /* When the parent card has the .open class, expand this div */
-  .service-card.open .service-info {
-    max-height: 500px; /* Large enough to fit content */
-    opacity: 1;
-    transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
-  }
-  
-  /* Optional: Smoothly scale the card slightly when open */
-  .service-card.open {
-    transform: scale(1.02);
-  }
-</style>
+        /* Glassmorphism Base */
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* The Expansion Logic */
+        .service-info {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+
+        .service-card.open .service-info {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
 </head>
 <body class="antialiased">
 
-  <canvas id="bgCanvas"></canvas>
+    <canvas id="bgCanvas"></canvas>
 
-  <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
-    <nav class="glass rounded-full px-2 py-2 shadow-lg flex items-center justify-between">
-      <div class="pl-4">
-        <span class="font-bold tracking-tight text-slate-900">AeridonTech</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <a href="#home" class="hidden md:block px-4 py-2 text-sm font-medium hover:text-blue-600 transition">Home</a>
-        <a href="#services" class="hidden md:block px-4 py-2 text-sm font-medium hover:text-blue-600 transition">Services</a>
-        <a href="#contact" class="px-5 py-2 text-sm font-bold bg-slate-900 text-white rounded-full hover:bg-slate-800 transition">Contact</a>
-      </div>
-    </nav>
-  </header>
+    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
+        <nav class="glass rounded-full px-2 py-2 shadow-lg flex items-center justify-between">
+            <span class="pl-5 font-bold tracking-tight text-slate-900">AeridonTech</span>
+            <div class="flex items-center gap-1">
+                <a href="#home" class="hidden md:block px-4 py-2 text-sm font-medium hover:text-blue-600 transition">Home</a>
+                <a href="#services" class="hidden md:block px-4 py-2 text-sm font-medium hover:text-blue-600 transition">Services</a>
+                <a href="#contact" class="px-5 py-2 text-sm font-bold bg-slate-900 text-white rounded-full hover:bg-slate-800 transition">Contact</a>
+            </div>
+        </nav>
+    </header>
 
-  <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-    <span class="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold tracking-widest uppercase mb-6 border border-blue-100">
-      Freelance Tech Studio
-    </span>
-    <h1 class="text-4xl md:text-7xl font-bold tracking-tighter text-slate-900 mb-6">
-      Design. Develop.<br><span class="text-blue-600">Deliver.</span>
-    </h1>
-    <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed mb-10">
-      We craft high-performance web experiences and automated systems for businesses that value speed, precision, and clean design.
-    </p>
-    <div class="animate-bounce w-6 h-6 text-slate-300">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-    </div>
-  </section>
-
- <section id="services" class="max-w-6xl mx-auto px-6 py-24">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-slate-900 mb-4">Our Services</h2>
-      <p class="text-slate-500 font-medium">Click a card to see how we can help your team.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8">
-      
-      <div onclick="toggleCard(this)" 
-           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
-                  hover:shadow-xl [&.open]:bg-sky-500 [&.open]:border-sky-400">
-        <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21h6l-.75-4M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 mb-6">
+            Design. Develop.<br><span class="text-blue-600">Deliver.</span>
+        </h1>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Clean interfaces and smart systems crafted by a team that expects more from technology.
+        </p>
+        <div class="animate-bounce text-slate-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
-        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Modern Web</h3>
-        <p class="text-slate-500 text-sm group-[.open]:text-sky-100 transition-colors">High-performance digital interfaces.</p>
-        
-        <div class="service-info">
-          <ul class="space-y-3 pt-6 text-white font-medium">
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Custom React & Tailwind</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> SEO & Speed Optimization</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Full E-commerce Systems</li>
-          </ul>
-        </div>
-      </div>
+    </section>
 
-      <div onclick="toggleCard(this)" 
-           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
-                  hover:shadow-xl [&.open]:bg-indigo-600 [&.open]:border-indigo-500">
-        <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Smart Systems</h3>
-        <p class="text-slate-500 text-sm group-[.open]:text-indigo-100 transition-colors">Reliable infrastructure & workflows.</p>
-        
-        <div class="service-info">
-          <ul class="space-y-3 pt-6 text-white font-medium">
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Cloud Infrastructure Setup</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Cybersecurity Auditing</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Internal Business Tools</li>
-          </ul>
-        </div>
-      </div>
+    <section id="services" class="max-w-6xl mx-auto px-6 py-24">
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2rem] cursor-pointer border hover:shadow-2xl [&.open]:bg-sky-500 [&.open]:border-sky-400">
+                <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21h6l-.75-4M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold group-[.open]:text-white">Modern Web</h3>
+                <p class="text-slate-500 text-sm group-[.open]:text-sky-100">Premium digital interfaces.</p>
+                <div class="service-info">
+                    <ul class="space-y-3 pt-4 text-white border-t border-white/20">
+                        <li class="flex items-center gap-2">● Custom React builds</li>
+                        <li class="flex items-center gap-2">● SEO Optimization</li>
+                        <li class="flex items-center gap-2">● Responsive Design</li>
+                    </ul>
+                </div>
+            </div>
 
-      <div onclick="toggleCard(this)" 
-           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
-                  hover:shadow-xl [&.open]:bg-emerald-600 [&.open]:border-emerald-500">
-        <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2rem] cursor-pointer border hover:shadow-2xl [&.open]:bg-indigo-600 [&.open]:border-indigo-500">
+                <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold group-[.open]:text-white">Smart Systems</h3>
+                <p class="text-slate-500 text-sm group-[.open]:text-indigo-100">IT & Cloud infrastructure.</p>
+                <div class="service-info">
+                    <ul class="space-y-3 pt-4 text-white border-t border-white/20">
+                        <li class="flex items-center gap-2">● Cloud Setup</li>
+                        <li class="flex items-center gap-2">● Security Audits</li>
+                        <li class="flex items-center gap-2">● Scalable Backend</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2rem] cursor-pointer border hover:shadow-2xl [&.open]:bg-emerald-600 [&.open]:border-emerald-500">
+                <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold group-[.open]:text-white">Automation</h3>
+                <p class="text-slate-500 text-sm group-[.open]:text-emerald-100">Efficient smart workflows.</p>
+                <div class="service-info">
+                    <ul class="space-y-3 pt-4 text-white border-t border-white/20">
+                        <li class="flex items-center gap-2">● API Integrations</li>
+                        <li class="flex items-center gap-2">● Task Automation</li>
+                        <li class="flex items-center gap-2">● Custom Scripting</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
-        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Automation</h3>
-        <p class="text-slate-500 text-sm group-[.open]:text-emerald-100 transition-colors">Save time with custom code.</p>
-        
-        <div class="service-info">
-          <ul class="space-y-3 pt-6 text-white font-medium">
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Custom Python & API Bots</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Workflow Auto-optimization</li>
-            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Data Scraping & Analysis</li>
-          </ul>
+    </section>
+
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-24">
+        <div class="glass p-12 rounded-[3rem] text-center border">
+            <h2 class="text-3xl font-bold mb-4">Work with our Team</h2>
+            <p class="text-slate-500 mb-10">Email us directly or copy our address below.</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <a href="mailto:aeridontech@gmail.com" class="px-10 py-4 bg-slate-900 text-white rounded-full font-bold hover:scale-105 transition active:scale-95">
+                    Email the Team
+                </a>
+                <button id="copyEmailBtn" class="px-10 py-4 bg-white border border-slate-200 rounded-full font-bold text-slate-700 hover:bg-slate-50 transition">
+                    <span id="emailText">aeridontech@gmail.com</span>
+                </button>
+            </div>
+            <p id="copyStatus" class="mt-4 text-emerald-600 font-medium opacity-0 transition">Email copied to clipboard!</p>
         </div>
-      </div>
+    </section>
 
-    </div>
-  </section>
+    <footer class="py-12 text-center text-slate-400 text-sm">
+        &copy; 2025 AeridonTech Studio.
+    </footer>
 
-  <section id="contact" class="max-w-4xl mx-auto px-6 py-24">
-    <div class="glass p-12 rounded-[2rem] text-center border border-slate-200">
-        <h2 class="text-3xl font-bold mb-4">Ready to start?</h2>
-        <p class="text-slate-500 mb-10">Our team is currently accepting new projects.</p>
-        
-        <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-            <a href="mailto:aeridontech@gmail.com" class="w-full md:w-auto px-10 py-4 bg-slate-900 text-white rounded-full font-bold hover:scale-105 transition transform active:scale-95">
-                Email the Team
-            </a>
-            <button id="copyEmailBtn" class="w-full md:w-auto px-10 py-4 bg-white border border-slate-200 rounded-full font-bold text-slate-700 hover:bg-slate-50 transition">
-                <span id="emailText">aeridontech@gmail.com</span>
-            </button>
-        </div>
-        <p id="copyStatus" class="mt-4 text-emerald-600 font-medium opacity-0 transition">Email copied!</p>
-    </div>
-  </section>
-
-  <footer class="py-12 text-center text-slate-400 text-sm border-t border-slate-50">
-    &copy; 2025 AeridonTech Studio.
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
