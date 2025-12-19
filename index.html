@@ -80,66 +80,68 @@
     </div>
   </section>
 
-  <section id="services" class="max-w-6xl mx-auto px-6 py-24">
+ <section id="services" class="max-w-6xl mx-auto px-6 py-24">
     <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">Our Services</h2>
-        <p class="text-slate-500">Tailored solutions for modern digital problems.</p>
+      <h2 class="text-3xl font-bold text-slate-900 mb-4">Our Services</h2>
+      <p class="text-slate-500 font-medium">Click a card to see how we can help your team.</p>
     </div>
-    
+
     <div class="grid md:grid-cols-3 gap-8">
-      <div class="service-card glass p-8 rounded-3xl cursor-pointer transition-all duration-300 border border-slate-200" onclick="toggleCard(this)">
-        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 21h6l-.75-4M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+      
+      <div onclick="toggleCard(this)" 
+           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
+                  hover:shadow-xl [&.open]:bg-sky-500 [&.open]:border-sky-400">
+        <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21h6l-.75-4M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Web Experiences</h3>
-        <p class="text-slate-500 text-sm">Responsive, SEO-optimized, and lightning fast.</p>
-        <div class="service-info text-slate-600 text-sm border-t border-slate-100 pt-4">
-            <ul class="space-y-3">
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Custom React & Tailwind builds
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> E-commerce solutions
-                </li>
-            </ul>
-        </div>
-      </div>
-
-      <div class="service-card glass p-8 rounded-3xl cursor-pointer transition-all duration-300 border border-slate-200" onclick="toggleCard(this)">
-        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2">IT Systems</h3>
-        <p class="text-slate-500 text-sm">Secure infrastructure and cloud management.</p>
-        <div class="service-info text-slate-600 text-sm border-t border-slate-100 pt-4">
-            <ul class="space-y-3">
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Server setup & maintenance
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Security auditing
-                </li>
-            </ul>
+        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Modern Web</h3>
+        <p class="text-slate-500 text-sm group-[.open]:text-sky-100 transition-colors">High-performance digital interfaces.</p>
+        
+        <div class="service-info">
+          <ul class="space-y-3 pt-6 text-white font-medium">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Custom React & Tailwind</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> SEO & Speed Optimization</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Full E-commerce Systems</li>
+          </ul>
         </div>
       </div>
 
-      <div class="service-card glass p-8 rounded-3xl cursor-pointer transition-all duration-300 border border-slate-200" onclick="toggleCard(this)">
-        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      <div onclick="toggleCard(this)" 
+           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
+                  hover:shadow-xl [&.open]:bg-indigo-600 [&.open]:border-indigo-500">
+        <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Automation</h3>
-        <p class="text-slate-500 text-sm">Eliminate repetitive tasks with smart code.</p>
-        <div class="service-info text-slate-600 text-sm border-t border-slate-100 pt-4">
-            <ul class="space-y-3">
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Custom Python & JS bots
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Workflow integrations
-                </li>
-            </ul>
+        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Smart Systems</h3>
+        <p class="text-slate-500 text-sm group-[.open]:text-indigo-100 transition-colors">Reliable infrastructure & workflows.</p>
+        
+        <div class="service-info">
+          <ul class="space-y-3 pt-6 text-white font-medium">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Cloud Infrastructure Setup</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Cybersecurity Auditing</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Internal Business Tools</li>
+          </ul>
         </div>
       </div>
+
+      <div onclick="toggleCard(this)" 
+           class="service-card group glass p-8 rounded-[2rem] cursor-pointer transition-all duration-500 border border-slate-200 
+                  hover:shadow-xl [&.open]:bg-emerald-600 [&.open]:border-emerald-500">
+        <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-colors">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2 group-[.open]:text-white transition-colors">Automation</h3>
+        <p class="text-slate-500 text-sm group-[.open]:text-emerald-100 transition-colors">Save time with custom code.</p>
+        
+        <div class="service-info">
+          <ul class="space-y-3 pt-6 text-white font-medium">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Custom Python & API Bots</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Workflow Auto-optimization</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-white"></span> Data Scraping & Analysis</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </section>
 
