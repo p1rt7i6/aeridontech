@@ -1,39 +1,87 @@
-function draw() {
-  // Create a radial gradient centered in the canvas
-  const gradient = ctx.createRadialGradient(
-    canvas.width / 2, canvas.height / 2, 0,          // inner circle
-    canvas.width / 2, canvas.height / 2, canvas.width / 2 // outer circle
-  );
-  gradient.addColorStop(0, "rgba(255,255,255,1)");   // pure white center
-  gradient.addColorStop(0.5, "rgba(255,255,255,0.95)");
-  gradient.addColorStop(1, "rgba(255,255,255,0.9)"); // subtle fade outward
+// === AeridonTech Binary Rain Background + Service Card Toggle ===
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("bgCanvas");
+  const ctx = canvas.getContext("2d");
 
-  // Fill background with gradient
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Resize canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  ctx.font = fontSize + "px monospace";
+  // AeridonTech brand colors
+  const colors = ["#073B4C", "#118AB2", "#06D6A0"];
 
-  for (let i = 0; i < drops.length; i++) {
-    // Pick random binary char
-    const text = chars[Math.floor(Math.random() * chars.length)];
-    // Cycle brand colors
-    const color = colors[i % colors.length];
-    ctx.fillStyle = color;
+  // Binary characters
+  const chars = ["0", "1"];
 
-    // Glow effect
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 8;
+  // Font size and columns
+  const fontSize = 18;
+  let columns = Math.floor(canvas.width / fontSize);
 
-    // Draw text
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+  // Drops (y positions per column)
+  let drops = Array(columns).fill(0);
 
-    // Move drop down slowly
-    drops[i] += 0.5;
+  function draw() {
+    // Radial gradient centered in canvas
+    const gradient = ctx.createRadialGradient(
+      canvas.width / 2, canvas.height / 2, 0,
+      canvas.width / 2, canvas.height / 2, canvas.width / 2
+    );
+    gradient.addColorStop(0, "rgba(255,255,255,1)");
+    gradient.addColorStop(0.5, "rgba(255,255,255,0.95)");
+    gradient.addColorStop(1, "rgba(255,255,255,0.9)");
 
-    // Reset drop randomly
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
-      drops[i] = 0;
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      const color = colors[i % colors.length];
+      ctx.fillStyle = color;
+
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      drops[i] += 0.5;
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
+        drops[i] = 0;
+      }
     }
   }
-}
+
+  // Animate
+  setInterval(draw, 50);
+
+  // Handle resize
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
+    drops = Array(columns).fill(0);
+  });
+
+  // === Service Card Toggle ===
+  window.toggleCard = function(id) {
+    const allCards = document.querySelectorAll(".service-card");
+
+    allCards.forEach(card => {
+      const details = card.querySelector(".service-info");
+      if (card.id === "card-" + id) {
+        const isOpen = card.classList.contains("open");
+        if (isOpen) {
+          card.classList.remove("open");
+          details.style.maxHeight = "0px";
+        } else {
+          card.classList.add("open");
+          details.style.maxHeight = details.scrollHeight + "px";
+        }
+      } else {
+        card.classList.remove("open");
+        card.querySelector(".service-info").style.maxHeight = "0px";
+      }
+    });
+  };
+});
