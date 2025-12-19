@@ -8,45 +8,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <style>
-    :root { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #ffffff;
-      color: #1e293b;
-    }
-    canvas {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0; pointer-events: none;
-    }
-    header, section, footer { position: relative; z-index: 10; }
+ <style>
+  /* ... your existing styles ... */
 
-    /* Polished Glassmorphism */
-    .glass {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+  .service-info {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease;
+  }
 
-    /* Smooth Service Info Transition */
-    .service-info {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .service-card.open .service-info {
-      max-height: 300px;
-      opacity: 1;
-      margin-top: 1.5rem;
-    }
-    .service-card.open {
-      border-color: #3b82f6;
-      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
-    }
-  </style>
+  /* When the parent card has the .open class, expand this div */
+  .service-card.open .service-info {
+    max-height: 500px; /* Large enough to fit content */
+    opacity: 1;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
+  }
+  
+  /* Optional: Smoothly scale the card slightly when open */
+  .service-card.open {
+    transform: scale(1.02);
+  }
+</style>
 </head>
 <body class="antialiased">
 
