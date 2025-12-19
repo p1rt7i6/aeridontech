@@ -4,25 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AeridonTech | Design. Develop. Deliver.</title>
+    
     <link rel="icon" type="image/png" href="assets/logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
-        :root { 
-            scroll-behavior: smooth; 
-            scroll-padding-top: 90px; 
-        }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: #ffffff; 
-            color: #1e293b; 
-            overflow-x: hidden;
-            width: 100%;
-        }
+        :root { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1e293b; overflow-x: hidden; width: 100%; }
         
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
         header, section, footer { position: relative; z-index: 10; width: 100%; }
 
         .glass {
@@ -47,8 +44,7 @@
 
         .service-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            height: auto;
-            align-self: start; /* Prevents stretching when neighbor is open */
+            align-self: start; /* Fixes centering when neighbors expand */
         }
 
         .service-card.open h3, .service-card.open p { color: white !important; }
@@ -61,10 +57,12 @@
     <header class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl">
         <nav class="glass rounded-full px-2 py-1.5 md:py-2 shadow-xl flex items-center justify-between border border-white/20">
             <a href="#home" class="flex items-center gap-2 pl-3 md:pl-4 group shrink-0">
-                <img src="assets/logo.png" alt="AT" class="h-6 w-auto md:h-8">
+                <img src="assets/logo.png" alt="Logo" class="h-6 w-auto md:h-8">
                 <span class="font-bold tracking-tighter text-slate-900 text-sm md:text-lg">AeridonTech</span>
             </a>
+
             <div class="flex items-center gap-0.5 md:gap-1">
+                <a href="#home" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all">Home</a>
                 <a href="#about" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all">About</a>
                 <a href="#services" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all">Services</a>
                 <a href="#contact" class="px-3 md:px-5 py-2 text-[10px] md:text-xs font-black bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all shadow-md uppercase">Contact</a>
@@ -85,18 +83,16 @@
     <section id="about" class="max-w-6xl mx-auto px-6 py-20">
         <div class="flex flex-col lg:flex-row gap-12 items-center">
             <div class="lg:w-1/2 text-center lg:text-left">
-                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight italic leading-tight">Built for Performance.<br><span class="text-blue-600 font-bold">Driven by Design.</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight italic leading-tight">Built for Performance.<br><span class="text-blue-600 font-bold tracking-tight">Driven by Design.</span></h2>
                 <p class="text-base md:text-lg text-slate-500 leading-relaxed font-medium">
-                    AeridonTech is a specialized freelance studio. We bridge the gap between complex business logic and intuitive user experiences.
+                    AeridonTech is a specialized freelance studio bridging the gap between business logic and user experience.
                 </p>
             </div>
-            <div class="lg:w-1/2 w-full">
+            <div class="lg:w-1/2 w-full text-center">
                 <div class="glass p-8 md:p-12 rounded-[2.5rem] border border-slate-200 shadow-sm">
-                    <div class="grid grid-cols-2 gap-6 md:gap-10 text-center font-bold italic">
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">100%</p><p class="text-[10px] md:text-xs text-slate-500 uppercase mt-2 not-italic">Uptime</p></div>
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">24h</p><p class="text-[10px] md:text-xs text-slate-500 uppercase mt-2 not-italic font-bold">Response</p></div>
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">0.4s</p><p class="text-[10px] md:text-xs text-slate-500 uppercase mt-2 not-italic">Speed</p></div>
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">50+</p><p class="text-[10px] md:text-xs text-slate-500 uppercase mt-2 not-italic">Launches</p></div>
+                    <div class="grid grid-cols-2 gap-6 md:gap-10 font-bold italic">
+                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">100%</p><p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Uptime</p></div>
+                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">24h</p><p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Response</p></div>
                     </div>
                 </div>
             </div>
@@ -130,7 +126,7 @@
                 <div class="service-info w-full text-left">
                     <ul class="space-y-3 pt-6 text-white border-t border-white/20 font-bold text-sm">
                         <li>● Cloud Management</li>
-                        <li>● Security Auditing</li>
+                        <li>● Security Audits</li>
                         <li>● Scalable Backend</li>
                     </ul>
                 </div>
@@ -141,32 +137,61 @@
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
                 <h3 class="text-xl font-bold italic mb-2 transition-colors">Automation</h3>
-                <p class="text-slate-500 text-sm transition-colors">Efficient code workflows.</p>
+                <p class="text-slate-500 text-sm transition-colors">Efficient smart workflows.</p>
                 <div class="service-info w-full text-left">
-                    <ul class="space-y-3 pt-6 text-white border-t border-white/20 font-bold text-sm">
+                    <ul class="space-y-3 pt-4 text-white border-t border-white/20 font-bold text-sm">
                         <li>● Custom Python Scripts</li>
                         <li>● API Integration</li>
                         <li>● Task Automation</li>
                     </ul>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section id="contact" class="max-w-5xl mx-auto px-6 py-20 pb-40">
-        <div class="glass p-10 md:p-16 rounded-[3.5rem] border shadow-2xl text-center relative overflow-hidden">
-            <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
-            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-slate-900 italic tracking-tight">Start a Project</h2>
-            <p class="text-slate-500 mb-10 font-medium">Direct experts. No middlemen. Expect a response in 24h.</p>
-            
-            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-                <a href="mailto:aeridontech@gmail.com" class="w-full md:w-auto px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition shadow-lg">Email Team</a>
-                <button id="copyEmailBtn" class="w-full md:w-auto px-10 py-5 bg-white border border-slate-200 rounded-2xl font-bold text-slate-700 hover:bg-slate-50 transition">
-                    <span id="emailText" class="text-xs">aeridontech@gmail.com</span>
-                </button>
+    <section id="contact" class="max-w-6xl mx-auto px-6 py-20 pb-40">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6 italic tracking-tight leading-tight">Let's build something <span class="text-blue-600 font-extrabold italic">extraordinary.</span></h2>
+                <p class="text-lg text-slate-500 mb-10 font-medium">Reach out and our team will navigate you through your technical journey.</p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0 font-bold italic text-slate-900">I</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm italic">Fast Onboarding</h4>
+                            <p class="text-xs text-slate-500 mt-1 font-medium">Start within 3-5 business days.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0 font-bold italic text-slate-900">II</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm italic">Flexible Pricing</h4>
+                            <p class="text-xs text-slate-500 mt-1 font-medium">Fixed-price or flexible retainers available.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p id="copyStatus" class="mt-4 text-emerald-600 font-bold text-xs opacity-0 transition italic uppercase">Address copied!</p>
+
+            <div class="glass p-10 rounded-[3rem] border border-slate-200 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-8 italic text-center">Start a Project</h3>
+                <div class="space-y-4">
+                    <a href="mailto:aeridontech@gmail.com" class="flex items-center justify-center w-full px-8 py-5 bg-slate-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition shadow-xl">
+                        Send us an Email
+                    </a>
+                    <button id="copyEmailBtn" class="flex items-center justify-between w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-700 hover:bg-white transition group">
+                        <span id="emailText" class="text-sm">aeridontech@gmail.com</span>
+                        <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                    <p id="copyStatus" class="text-center text-emerald-600 text-[10px] font-bold opacity-0 transition italic uppercase tracking-widest text-xs">Address copied!</p>
+                </div>
+
+                <div class="mt-8 pt-8 border-t border-slate-100 flex flex-wrap justify-center gap-6">
+                    <a href="https://x.com/AeridonTech" target="_blank" class="text-slate-400 hover:text-blue-400 transition text-[10px] font-bold uppercase tracking-widest">X (Twitter)</a>
+                    <a href="https://www.instagram.com/aeridontech/" target="_blank" class="text-slate-400 hover:text-pink-500 transition text-[10px] font-bold uppercase tracking-widest">Instagram</a>
+                    <a href="https://www.facebook.com/people/Aeridontech/61578533461562/" target="_blank" class="text-slate-400 hover:text-blue-600 transition text-[10px] font-bold uppercase tracking-widest">Facebook</a>
+                </div>
+            </div>
         </div>
     </section>
 
