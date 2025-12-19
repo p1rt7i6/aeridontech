@@ -1,19 +1,19 @@
 /**
- * 1. CARD TOGGLE LOGIC
+ * CARD TOGGLE LOGIC
  */
 function toggleCard(element) {
-    const isOpen = element.classList.contains('open');
-    
-    // Close all cards
+    // If you want only one card open at a time, uncomment the lines below:
+    /*
     document.querySelectorAll('.service-card').forEach(card => {
-        card.classList.remove('open');
+        if (card !== element) card.classList.remove('open');
     });
-
-    // If the clicked card wasn't open, open it
-    if (!isOpen) {
-        element.classList.add('open');
-    }
+    */
+    
+    // Toggle current card
+    element.classList.toggle('open');
 }
+
+
 
 /**
  * 2. COPY EMAIL SYSTEM
