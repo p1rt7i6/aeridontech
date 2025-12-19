@@ -10,7 +10,7 @@
     body, html {
       margin: 0; padding: 0; overflow-x: hidden;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #ffffff; /* clean background */
+      background: #ffffff;
     }
     canvas {
       position: fixed; top: 0; left: 0;
@@ -18,6 +18,15 @@
       z-index: 0; pointer-events: none;
     }
     header, section, footer { position: relative; z-index: 2; }
+    .service-info {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+    }
+    .service-card.open .service-info {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -26,20 +35,20 @@
   <canvas id="bgCanvas"></canvas>
 
   <!-- Capsule Header -->
-  <header class="fixed top-4 left-1/2 transform -translate-x-1/2 z-30">
-    <nav class="flex items-center space-x-3 md:space-x-6 px-4">
+  <header class="fixed top-4 left-1/2 transform -translate-x-1/2 z-30 
+                 bg-gradient-to-r from-white via-[#fdf6ec] to-white 
+                 rounded-full shadow-md px-4 py-2">
+    <nav class="flex flex-wrap items-center space-x-3 md:space-x-6">
       <div class="flex items-center space-x-2">
-        <img src="assets/logo.png" alt="AeridonTech Logo"
-             class="h-7 w-auto object-contain drop-shadow-md">
         <span class="text-base md:text-lg font-semibold tracking-tight text-slate-800">
           AeridonTech
         </span>
       </div>
-      <div class="hidden md:flex items-center space-x-3">
-        <a href="#home" class="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition">Home</a>
-        <a href="#about" class="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition">About</a>
-        <a href="#services" class="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition">Services</a>
-        <a href="#contact" class="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition">Contact</a>
+      <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3">
+        <a href="#home" class="px-4 py-2 rounded-full bg-white text-slate-700 hover:bg-slate-100 transition">Home</a>
+        <a href="#about" class="px-4 py-2 rounded-full bg-white text-slate-700 hover:bg-slate-100 transition">About</a>
+        <a href="#services" class="px-4 py-2 rounded-full bg-white text-slate-700 hover:bg-slate-100 transition">Services</a>
+        <a href="#contact" class="px-4 py-2 rounded-full bg-white text-slate-700 hover:bg-slate-100 transition">Contact</a>
       </div>
     </nav>
   </header>
@@ -74,11 +83,15 @@
            class="service-card group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
         <div class="relative p-6 md:p-7 text-center">
           <div class="flex justify-center mb-4 text-sky-500">
-            <img src="assets/code-icon.png" alt="Web Development Icon" class="h-8 w-8 object-contain">
+            <!-- Inline SVG Icon -->
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="14" rx="2" ry="2" stroke-width="1.5"/>
+              <path d="M8 10l-2 2 2 2M16 10l2 2-2 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Modern Web Experiences</h3>
           <p class="text-sm md:text-[15px] text-slate-600">Premium websites for every device.</p>
-          <div id="details-web" class="service-info max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
+          <div id="details-web" class="service-info mt-4 text-left text-white">
             <ul class="list-disc pl-5 space-y-2">
               <li>Responsive layouts optimized for all devices</li>
               <li>Smooth animations and interactive UI elements</li>
@@ -93,11 +106,15 @@
            class="service-card group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
         <div class="relative p-6 md:p-7 text-center">
           <div class="flex justify-center mb-4 text-indigo-500">
-            <img src="assets/help-icon.png" alt="Smart IT Icon" class="h-8 w-8 object-contain">
+            <!-- Inline SVG Icon -->
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="14" rx="2" ry="2" stroke-width="1.5"/>
+              <path d="M12 9a2 2 0 012 2c0 1-1 1.5-1 1.5M12 16h.01" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Smart IT & Systems</h3>
           <p class="text-sm md:text-[15px] text-slate-600">Reliable infrastructure and workflows.</p>
-          <div id="details-it" class="service-info max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
+          <div id="details-it" class="service-info mt-4 text-left text-white">
             <ul class="list-disc pl-5 space-y-2">
               <li>Secure and scalable IT infrastructure</li>
               <li>Cloud solutions tailored to business needs</li>
@@ -112,36 +129,11 @@
            class="service-card group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
         <div class="relative p-6 md:p-7 text-center">
           <div class="flex justify-center mb-4 text-emerald-500">
-            <img src="assets/layout-icon.png" alt="Automation Icon" class="h-8 w-8 object-contain">
+            <!-- Inline SVG Icon -->
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="14" rx="2" ry="2" stroke-width="1.5"/>
+              <rect x="5" y="6" width="6" height="4" stroke-width="1.5"/>
+              <path d="M15 8l1.5 1.5L18 8M15 12l1.5-1.5L18 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Automation & Efficiency</h3>
-          <p class="text-sm md:text-[15px] text-slate-600">Custom tools to save time.</p>
-          <div id="details-automation" class="service-info max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Automated workflows to save time</li>
-              <li>Integration with existing systems</li>
-              <li>Boosted productivity with smart tools</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="flex justify-center items-center py-20">
-    <div class="px-6 py-3 rounded-full border border-slate-300 bg-white/70 backdrop-blur-xl shadow-md text-slate-800 text-lg font-semibold">
-      Contact Team: <a href="mailto:aeridontech@gmail.com" class="text-sky-600 hover:underline">aeridontech@gmail.com</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="text-center py-6 text-slate-500 text-sm">
-    © 2025 AeridonTech. Freelanced services with premium results.
-  </footer>
-
-  <!-- Scripts -->
-  <script src="js/script.js"></script>
-  <script>
-    function toggleCard
+          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Automation & Efficiency</h3
