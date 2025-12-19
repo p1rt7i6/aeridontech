@@ -1,20 +1,19 @@
-/**
- * 1. CARD TOGGLE SYSTEM
- */
+/** [TAG: CARD_LOGIC] **/
 function toggleCard(element) {
+    // 1. Check if the card clicked is already open
     const isOpen = element.classList.contains('open');
-    
-    // Close other cards for cleaner focus
+
+    // 2. Select all service cards and remove the 'open' class from all of them
+    // This ensures only one card stays open at a time
     document.querySelectorAll('.service-card').forEach(card => {
         card.classList.remove('open');
     });
-    
-    // Toggle current card
+
+    // 3. If the card we clicked wasn't open, open it now
     if (!isOpen) {
         element.classList.add('open');
     }
 }
-
 /**
  * EMAIL COPY SYSTEM
  */
