@@ -16,7 +16,7 @@ function toggleCard(element) {
 }
 
 /**
- * 2. EMAIL COPY SYSTEM
+ * EMAIL COPY SYSTEM
  */
 const copyBtn = document.getElementById('copyEmailBtn');
 const emailText = document.getElementById('emailText');
@@ -24,19 +24,19 @@ const copyStatus = document.getElementById('copyStatus');
 const fullEmail = "aeridontech@gmail.com";
 
 if (copyBtn) {
-    copyBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevents card toggle if button is inside a card
+    copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(fullEmail).then(() => {
-            emailText.innerText = "Copied!";
+            const originalText = emailText.innerText;
+            emailText.innerText = "Copied to Clipboard!";
             copyStatus.style.opacity = "1";
+            
             setTimeout(() => {
                 emailText.innerText = fullEmail;
                 copyStatus.style.opacity = "0";
-            }, 2000);
+            }, 2500);
         });
     });
 }
-
 /**
  * 3. BACKGROUND ANIMATION (Optimized)
  */
