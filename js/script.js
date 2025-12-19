@@ -1,87 +1,94 @@
-// === AeridonTech Binary Rain Background + Service Card Toggle ===
-document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById("bgCanvas");
-  const ctx = canvas.getContext("2d");
+/**
+ * 1. CARD TOGGLE LOGIC
+ */
+function toggleCard(element) {
+    const isOpen = element.classList.contains('open');
+    
+    // Close all cards
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.classList.remove('open');
+    });
 
-  // Resize canvas
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  // AeridonTech brand colors
-  const colors = ["#073B4C", "#118AB2", "#06D6A0"];
-
-  // Binary characters
-  const chars = ["0", "1"];
-
-  // Font size and columns
-  const fontSize = 18;
-  let columns = Math.floor(canvas.width / fontSize);
-
-  // Drops (y positions per column)
-  let drops = Array(columns).fill(0);
-
-  function draw() {
-    // Radial gradient centered in canvas
-    const gradient = ctx.createRadialGradient(
-      canvas.width / 2, canvas.height / 2, 0,
-      canvas.width / 2, canvas.height / 2, canvas.width / 2
-    );
-    gradient.addColorStop(0, "rgba(255,255,255,1)");
-    gradient.addColorStop(0.5, "rgba(255,255,255,0.95)");
-    gradient.addColorStop(1, "rgba(255,255,255,0.9)");
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars[Math.floor(Math.random() * chars.length)];
-      const color = colors[i % colors.length];
-      ctx.fillStyle = color;
-
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 8;
-
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-      drops[i] += 0.5;
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
-        drops[i] = 0;
-      }
+    // If the clicked card wasn't open, open it
+    if (!isOpen) {
+        element.classList.add('open');
     }
-  }
+}
 
-  // Animate
-  setInterval(draw, 50);
+/**
+ * 2. COPY EMAIL SYSTEM
+ */
+const copyBtn = document.getElementById('copyEmailBtn');
+const emailText = document.getElementById('emailText');
+const copyStatus = document.getElementById('copyStatus');
+const email = "aeridontech@gmail.com";
 
-  // Handle resize
-  window.addEventListener("resize", () => {
+if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(email).then(() => {
+            emailText.innerText = "Copied!";
+            copyStatus.style.opacity = "1";
+            setTimeout(() => {
+                emailText.innerText = email;
+                copyStatus.style.opacity = "0";
+            }, 2000);
+        });
+    });
+}
+
+/**
+ * 3. OPTIMIZED BACKGROUND ANIMATION
+ */
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = Array(columns).fill(0);
-  });
+}
 
-  // === Service Card Toggle ===
-  window.toggleCard = function(id) {
-    const allCards = document.querySelectorAll(".service-card");
-
-    allCards.forEach(card => {
-      const details = card.querySelector(".service-info");
-      if (card.id === "card-" + id) {
-        const isOpen = card.classList.contains("open");
-        if (isOpen) {
-          card.classList.remove("open");
-          details.style.maxHeight = "0px";
-        } else {
-          card.classList.add("open");
-          details.style.maxHeight = details.scrollHeight + "px";
+class Particle {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = Math.random() * 0.4 - 0.2;
+        this.life = Math.random() * 1;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) {
+            this.reset();
         }
-      } else {
-        card.classList.remove("open");
-        card.querySelector(".service-info").style.maxHeight = "0px";
-      }
+    }
+    draw() {
+        ctx.fillStyle = `rgba(59, 130, 246, 0.08)`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init() {
+    resize();
+    particles = Array.from({length: 50}, () => new Particle());
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+        p.update();
+        p.draw();
     });
-  };
-});
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', resize);
+init();
+animate();
