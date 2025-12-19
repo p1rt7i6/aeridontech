@@ -2,12 +2,12 @@
 function toggleCard(element) {
     const isCurrentlyOpen = element.classList.contains('open');
 
-    // Remove 'open' class from all other cards
+    // Close all other cards
     document.querySelectorAll('.service-card').forEach(card => {
         card.classList.remove('open');
     });
 
-    // If it wasn't open, open it now
+    // If the clicked card wasn't open, open it
     if (!isCurrentlyOpen) {
         element.classList.add('open');
     }
@@ -64,7 +64,7 @@ class Particle {
 }
 function init() { 
     resize(); 
-    particles = Array.from({length: 35}, () => new Particle()); 
+    particles = Array.from({length: 30}, () => new Particle()); 
 }
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
