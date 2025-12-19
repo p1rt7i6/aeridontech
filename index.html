@@ -10,7 +10,7 @@
     body, html {
       margin: 0; padding: 0; overflow-x: hidden;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #ffffff; /* keep background clean */
+      background: #ffffff; /* clean background */
     }
     canvas {
       position: fixed; top: 0; left: 0;
@@ -66,83 +66,3 @@
 
   <!-- Services Section -->
   <section id="services" class="max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-20">
-    <h2 class="text-3xl font-semibold mb-10 text-center text-slate-800">Freelanced Services</h2>
-    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
-
-      <!-- Card 1 -->
-      <div onclick="toggleCard('web')" id="card-web"
-           class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
-        <div class="relative p-6 md:p-7 text-center">
-          <div class="flex justify-center mb-4 text-sky-500">
-            <img src="assets/code-icon.png" alt="Web Development Icon" class="h-8 w-8 object-contain">
-          </div>
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Modern Web Experiences</h3>
-          <p class="text-sm md:text-[15px] text-slate-600">Premium websites for every device.</p>
-          <div id="details-web" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Responsive layouts optimized for all devices</li>
-              <li>Smooth animations and interactive UI elements</li>
-              <li>Performance-focused design with premium feel</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div onclick="toggleCard('it')" id="card-it"
-           class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
-        <div class="relative p-6 md:p-7 text-center">
-          <div class="flex justify-center mb-4 text-indigo-500">
-            <img src="assets/help-icon.png" alt="Smart IT Icon" class="h-8 w-8 object-contain">
-          </div>
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Smart IT & Systems</h3>
-          <p class="text-sm md:text-[15px] text-slate-600">Reliable infrastructure and workflows.</p>
-          <div id="details-it" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Secure and scalable IT infrastructure</li>
-              <li>Cloud solutions tailored to business needs</li>
-              <li>Efficient workflows with minimal downtime</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div onclick="toggleCard('automation')" id="card-automation"
-           class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
-        <div class="relative p-6 md:p-7 text-center">
-          <div class="flex justify-center mb-4 text-emerald-500">
-            <img src="assets/layout-icon.png" alt="Automation Icon" class="h-8 w-8 object-contain">
-          </div>
-          <h3 class="text-lg md:text-xl font-semibold mb-2 text-slate-800">Automation & Efficiency</h3>
-          <p class="text-sm md:text-[15px] text-slate-600">Custom tools to save time.</p>
-          <div id="details-automation" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Automated workflows to save time</li>
-              <li>Integration with existing systems</li>
-              <li>Boosted productivity with smart tools</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="flex justify-center items-center py-20">
-    <div class="px-6 py-3 rounded-full border border-slate-300 bg-white/70 backdrop-blur-xl shadow-md text-slate-800 text-lg font-semibold">
-      Contact Team: <a href="mailto:aeridontech@gmail.com" class="text-sky-600 hover:underline">aeridontech@gmail.com</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="text-center py-6 text-slate-500 text-sm">
-    © 2025 AeridonTech. Freelanced services with premium results.
-  </footer>
-
-  <!-- Scripts -->
-  <script src="js/script.js"></script>
-  <script>
-    // Expand/Collapse Cards
-    function toggleCard(id
