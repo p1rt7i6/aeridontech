@@ -2,13 +2,20 @@
  * 1. CARD TOGGLE SYSTEM
  */
 function toggleCard(element) {
-    // Close other cards for a cleaner look
+    console.log("Card Clicked:", element); // Debugging line
+    
+    // Check if this card is already open
+    const isOpen = element.classList.contains('open');
+    
+    // Close ALL other cards
     document.querySelectorAll('.service-card').forEach(card => {
-        if (card !== element) card.classList.remove('open');
+        card.classList.remove('open');
     });
     
-    // Toggle clicked card
-    element.classList.toggle('open');
+    // If the card was not open, open it
+    if (!isOpen) {
+        element.classList.add('open');
+    }
 }
 
 /**
@@ -20,14 +27,15 @@ const copyStatus = document.getElementById('copyStatus');
 const fullEmail = "aeridontech@gmail.com";
 
 if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
+    copyBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevents triggers on parent elements
         navigator.clipboard.writeText(fullEmail).then(() => {
             emailText.innerText = "Copied!";
             copyStatus.style.opacity = "1";
             setTimeout(() => {
                 emailText.innerText = fullEmail;
                 copyStatus.style.opacity = "0";
-            }, 2500);
+            }, 2000);
         });
     });
 }
@@ -51,9 +59,9 @@ class Particle {
     reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.random() * 0.3 - 0.15;
-        this.speedY = Math.random() * 0.3 - 0.15;
+        this.size = Math.random() * 1.2 + 0.5;
+        this.speedX = Math.random() * 0.2 - 0.1;
+        this.speedY = Math.random() * 0.2 - 0.1;
     }
     update() {
         this.x += this.speedX;
@@ -61,7 +69,7 @@ class Particle {
         if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) this.reset();
     }
     draw() {
-        ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.08)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
