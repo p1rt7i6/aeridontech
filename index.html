@@ -116,7 +116,8 @@
   <div class="grid md:grid-cols-3 gap-6 md:gap-8">
 
     <!-- Card 1: Modern Web Experiences -->
-    <div onclick="toggleService('web')" class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer">
+    <div onclick="expandCard('web')" id="card-web"
+         class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
       <div class="relative p-6 md:p-7 text-center">
         <div class="flex justify-center mb-4 text-sky-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,18 +129,18 @@
         <p class="text-sm md:text-[15px] text-slate-600">
           Sleek, responsive, and interactive websites that feel premium on every device.
         </p>
+        <div id="details-web" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
+          <p>
+            We craft websites with cutting-edge design, smooth animations, and responsive layouts.
+            Every project is optimized for performance, accessibility, and a premium user experience.
+          </p>
+        </div>
       </div>
-    </div>
-    <div id="service-web" class="hidden mt-4 p-6 bg-white/80 rounded-xl shadow-md">
-      <h4 class="text-lg font-semibold">Modern Web Experiences — Details</h4>
-      <p class="text-sm text-slate-600 mt-2">
-        We craft websites with cutting-edge design, smooth animations, and responsive layouts. 
-        Every project is optimized for performance, accessibility, and a premium user experience.
-      </p>
     </div>
 
     <!-- Card 2: Smart IT & Systems -->
-    <div onclick="toggleService('it')" class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer">
+    <div onclick="expandCard('it')" id="card-it"
+         class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
       <div class="relative p-6 md:p-7 text-center">
         <div class="flex justify-center mb-4 text-indigo-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -151,18 +152,18 @@
         <p class="text-sm md:text-[15px] text-slate-600">
           Reliable infrastructure and streamlined workflows that keep your business running smoothly.
         </p>
+        <div id="details-it" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
+          <p>
+            From servers to cloud solutions, we design IT systems that scale with your business.
+            Our focus is on reliability, security, and efficiency to keep operations seamless.
+          </p>
+        </div>
       </div>
-    </div>
-    <div id="service-it" class="hidden mt-4 p-6 bg-white/80 rounded-xl shadow-md">
-      <h4 class="text-lg font-semibold">Smart IT & Systems — Details</h4>
-      <p class="text-sm text-slate-600 mt-2">
-        From servers to cloud solutions, we design IT systems that scale with your business. 
-        Our focus is on reliability, security, and efficiency to keep operations seamless.
-      </p>
     </div>
 
     <!-- Card 3: Automation & Efficiency -->
-    <div onclick="toggleService('automation')" class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer">
+    <div onclick="expandCard('automation')" id="card-automation"
+         class="group relative rounded-2xl border border-slate-300 bg-white/60 backdrop-blur-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden">
       <div class="relative p-6 md:p-7 text-center">
         <div class="flex justify-center mb-4 text-emerald-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -174,23 +175,41 @@
         <p class="text-sm md:text-[15px] text-slate-600">
           Custom tools and automations that reduce manual work and boost productivity.
         </p>
+        <div id="details-automation" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out rounded-xl mt-4 text-left text-white">
+          <p>
+            We build automation workflows that save time and eliminate repetitive tasks.
+            Our solutions integrate seamlessly with your existing systems to maximize productivity.
+          </p>
+        </div>
       </div>
-    </div>
-    <div id="service-automation" class="hidden mt-4 p-6 bg-white/80 rounded-xl shadow-md">
-      <h4 class="text-lg font-semibold">Automation & Efficiency — Details</h4>
-      <p class="text-sm text-slate-600 mt-2">
-        We build automation workflows that save time and eliminate repetitive tasks. 
-        Our solutions integrate seamlessly with your existing systems to maximize productivity.
-      </p>
     </div>
 
   </div>
 </section>
 
 <script>
-function toggleService(id) {
-  const el = document.getElementById('service-' + id);
-  el.classList.toggle('hidden');
+function expandCard(id) {
+  // Collapse all cards first
+  ['web','it','automation'].forEach(cardId => {
+    const details = document.getElementById('details-' + cardId);
+    const card = document.getElementById('card-' + cardId);
+    details.style.maxHeight = "0";
+    card.classList.remove('bg-sky-600','bg-indigo-600','bg-emerald-600','text-white');
+  });
+
+  // Expand selected card
+  const details = document.getElementById('details-' + id);
+  const card = document.getElementById('card-' + id);
+  details.style.maxHeight = details.scrollHeight + "px";
+
+  // Apply color based on card
+  if(id === 'web') {
+    card.classList.add('bg-sky-600','text-white');
+  } else if(id === 'it') {
+    card.classList.add('bg-indigo-600','text-white');
+  } else if(id === 'automation') {
+    card.classList.add('bg-emerald-600','text-white');
+  }
 }
 </script>
 
