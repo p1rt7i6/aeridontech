@@ -89,17 +89,21 @@
 <body class="antialiased">
 
     <canvas id="bgCanvas"></canvas>
-
-    
     <header class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl">
-
         <nav class="glass rounded-full px-2 py-1.5 md:py-2 shadow-xl flex items-center justify-between border border-white/20">
-
             <a href="#home" class="flex items-center gap-2 pl-3 md:pl-4 group shrink-0">
-
                 <img src="assets/logo.png" alt="Logo" class="h-6 w-auto md:h-8">
-
                 <span class="font-bold tracking-tighter text-slate-900 text-sm md:text-lg">AeridonTech</span>
+            </a>
+
+            <div class="flex items-center gap-0.5 md:gap-1">
+                <a href="#home" class="hidden md:block px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Home</a>
+                <a href="#services" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Services</a>
+                <a href="#work" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Work</a>
+                <a href="#contact" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-black bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all shadow-md uppercase">Contact</a>
+            </div>
+        </nav>
+    </header>
 
     <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4">
         <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter text-slate-900 mb-6 italic">
