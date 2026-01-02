@@ -24,31 +24,67 @@
 
         .glass {
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(3px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        /* [TAG: EXPANSION_ANIMATION] */
+        /* [SMOOTH CARD ANIMATION CSS] */
         .service-info {
-            max-height: 0;
-            overflow: hidden;
+            display: grid;
+            grid-template-rows: 0fr;
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.5s ease-in-out,
+                        margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+        }
+
+        .service-info > ul {
+            overflow: hidden;
         }
 
         .service-card.open .service-info {
-            max-height: 600px !important;
-            opacity: 1 !important;
-            margin-top: 1.5rem !important;
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 1.5rem;
         }
 
         .service-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            align-self: start; /* Fixes centering when neighbors expand */
+            transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+            align-self: start;
         }
 
         .service-card.open h3, .service-card.open p { color: white !important; }
     </style>
+
+    
+
+    <style>
+        /* Add this to your existing styles */
+        @keyframes infinite-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .animate-infinite-scroll {
+            animation: infinite-scroll 25s linear infinite;
+        }
+        /* --- UPDATED FLOATING ICON STYLES --- */
+        .icon-3d {
+            /* Permanent strong shadow for floating effect */
+            filter: drop-shadow(0px 8px 12px rgba(20, 20, 40, 0.15));
+            
+            /* Prepare for 3D hover transformation */
+            transform: perspective(500px) rotateX(0deg) rotateY(0deg) translateZ(0);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy transition */
+        }
+
+        .icon-3d:hover {
+            /* On hover, tilt and scale up. Shadow gets slightly deeper. */
+            filter: drop-shadow(0px 15px 20px rgba(20, 20, 40, 0.2));
+            transform: perspective(500px) rotateX(10deg) rotateY(-10deg) scale(1.15) translateZ(20px);
+        }
+    </style>
+
 </head>
 <body class="antialiased">
 
@@ -57,45 +93,92 @@
     <header class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl">
         <nav class="glass rounded-full px-2 py-1.5 md:py-2 shadow-xl flex items-center justify-between border border-white/20">
             <a href="#home" class="flex items-center gap-2 pl-3 md:pl-4 group shrink-0">
-                <img src="assets/logo.png" alt="Logo" class="h-6 w-auto md:h-8">
+                <img src="logo.png" alt="Logo" class="h-6 w-auto md:h-8">
                 <span class="font-bold tracking-tighter text-slate-900 text-sm md:text-lg">AeridonTech</span>
             </a>
 
             <div class="flex items-center gap-0.5 md:gap-1">
-                <a href="#home" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Home</a>
-                <a href="#about" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">About</a>
-                <a href="#services" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Services</a>
-                <a href="#contact" class="px-2 md:px-4 py-2 text-[10px] md:text-xs font-black bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all shadow-md uppercase">Contact</a>
+                <a href="#home" class="hidden md:block px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Home</a>
+                <a href="#services" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Services</a>
+                <a href="#work" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-full transition-all uppercase">Work</a>
+                <a href="#contact" class="px-3 md:px-4 py-2 text-[10px] md:text-xs font-black bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all shadow-md uppercase">Contact</a>
             </div>
         </nav>
     </header>
 
     <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4">
-        <h1 class="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-6 italic">
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter text-slate-900 mb-6 italic">
             Design. Develop.<br><span class="text-blue-600 font-extrabold italic">Deliver.</span>
         </h1>
         <p class="text-sm md:text-lg text-slate-500 max-w-xl mx-auto mb-10 font-medium px-4">
             Clean interfaces, modern experiences, and smart systems crafted for businesses that expect more from their technology.
         </p>
-        <div class="animate-bounce text-slate-300 text-2xl font-bold">↓</div>
+        <div class="animate-bounce text-slate-300 text-4xl font-bold">↓</div>
     </section>
 
     <section id="about" class="max-w-6xl mx-auto px-6 py-20">
         <div class="flex flex-col lg:flex-row gap-12 items-center">
             <div class="lg:w-1/2 text-center lg:text-left">
-                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight italic leading-tight">Built for Performance.<br><span class="text-blue-600 font-bold tracking-tight">Driven by Design.</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight italic leading-tight">
+                    Digital Artistry.<br>
+                    <span class="text-blue-600 font-bold tracking-tight">Technical Mastery.</span>
+                </h2>
                 <p class="text-base md:text-lg text-slate-500 leading-relaxed font-medium">
-                    AeridonTech is a freelance tech studio delivering premium web experiences, smart systems, and automation tools.  
-                    We work directly with clients to craft modern, scalable solutions — no middlemen, just clean execution and creative precision.
+                    AeridonTech is your comprehensive digital partner. We merge creative design with complex engineering to provide end-to-end solutions. 
+                    From custom apps and branding to smart home automation, we turn your technical challenges into competitive advantages.
                 </p>
             </div>
             <div class="lg:w-1/2 w-full text-center">
-                <div class="glass p-8 md:p-12 rounded-[5rem] border border-slate-200 shadow-md">
-                    <div class="grid grid-cols-2 gap-5 md:gap-9 font-bold italic">
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">95%</p><p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Uptime</p></div>
-                        <div><p class="text-3xl md:text-5xl text-slate-900 tracking-tight">24h</p><p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Response</p></div>
+                <div id="stats-container" class="glass p-10 md:p-12 rounded-[6rem] border border-slate-250 shadow-md">
+                    <div class="grid grid-cols-2 gap-5 md:gap-10 font-bold italic">
+                        <div>
+                            <p class="counter-number text-3xl md:text-5xl text-slate-900 tracking-tight" data-target="100" data-suffix="%">0%</p>
+                            <p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Custom</p>
+                        </div>
+                        <div>
+                            <p class="counter-number text-3xl md:text-5xl text-slate-900 tracking-tight" data-target="360" data-suffix="°">0°</p>
+                            <p class="text-[10px] text-slate-400 uppercase mt-2 not-italic">Support</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 overflow-hidden relative z-20 mt-10">
+        
+        <div class="relative w-full max-w-[95%] xl:max-w-7xl mx-auto [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-32px),transparent_100%)]">
+            
+            <div class="flex items-center gap-10 md:gap-16 animate-infinite-scroll w-max py-8 px-4">
+                
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" alt="WordPress" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.worldvectorlogo.com/logos/shopify.svg" alt="Shopify" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/woocommerce/woocommerce-original.svg" alt="WooCommerce" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.worldvectorlogo.com/logos/zapier.svg" alt="Zapier" class="h-8 md:h-10 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" class="h-8 md:h-10 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="Tailwind" class="h-6 md:h-8 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="h-10 md:h-12 w-auto icon-3d">
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" alt="WordPress" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.worldvectorlogo.com/logos/shopify.svg" alt="Shopify" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/woocommerce/woocommerce-original.svg" alt="WooCommerce" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://cdn.worldvectorlogo.com/logos/zapier.svg" alt="Zapier" class="h-8 md:h-10 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" class="h-8 md:h-10 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP" class="h-10 md:h-12 w-auto icon-3d">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="Tailwind" class="h-6 md:h-8 w-auto icon-3d">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="h-10 md:h-12 w-auto icon-3d">
+
             </div>
         </div>
     </section>
@@ -103,101 +186,252 @@
     <section id="services" class="max-w-6xl mx-auto px-6 py-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-start">
             
-            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2.5rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-sky-500 flex flex-col items-center text-center">
-                <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21h6l-.75-4M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[3rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-sky-400 flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-sky-50 text-sky-500 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
                 </div>
-                <h3 class="text-xl font-bold italic mb-2 transition-colors">Modern Web</h3>
-                <p class="text-slate-500 text-sm transition-colors">Premium digital interfaces.</p>
+                <h3 class="text-xl font-bold italic mb-2 transition-colors">Web, Apps & Design</h3>
+                <p class="text-slate-500 text-sm transition-colors">Your complete digital identity.</p>
                 <div class="service-info w-full text-left">
                     <ul class="space-y-3 pt-6 text-white border-t border-white/20 font-bold text-sm">
-                        <li>● Custom React & Tailwind</li>
-                        <li>● SEO Optimization</li>
-                        <li>● Fast Page Loads</li>
+                        <li>● Custom Web & App Dev</li>
+                        <li>● Logo & Graphic Design</li>
+                        <li>● UI/UX & Brand Identity</li>
                     </ul>
                 </div>
             </div>
 
-            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2.5rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-indigo-600 flex flex-col items-center text-center">
-                <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                </div>
-                <h3 class="text-xl font-bold italic mb-2 transition-colors">Smart IT</h3>
-                <p class="text-slate-500 text-sm transition-colors">Infrastructure & Cloud.</p>
-                <div class="service-info w-full text-left">
-                    <ul class="space-y-3 pt-6 text-white border-t border-white/20 font-bold text-sm">
-                        <li>● Cloud Management</li>
-                        <li>● Security Audits</li>
-                        <li>● Scalable Backend</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[2.5rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-emerald-600 flex flex-col items-center text-center">
-                <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[3rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-violet-400 flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-violet-50 text-violet-500 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <h3 class="text-xl font-bold italic mb-2 transition-colors">Automation</h3>
-                <p class="text-slate-500 text-sm transition-colors">Efficient smart workflows.</p>
+                <h3 class="text-xl font-bold italic mb-2 transition-colors">Smart Automation</h3>
+                <p class="text-slate-500 text-sm transition-colors">Intelligent flows for home & business.</p>
+                <div class="service-info w-full text-left">
+                    <ul class="space-y-3 pt-6 text-white border-t border-white/20 font-bold text-sm">
+                        <li>● Home Automation (IoT)</li>
+                        <li>● Workflow Optimization</li>
+                        <li>● Custom Scripts & Tools</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div onclick="toggleCard(this)" class="service-card group glass p-8 rounded-[3rem] cursor-pointer border hover:shadow-2xl transition-all duration-500 [&.open]:bg-teal-400 flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-teal-50 text-teal-500 rounded-2xl flex items-center justify-center mb-6 group-[.open]:bg-white/20 group-[.open]:text-white transition-all">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold italic mb-2 transition-colors">360° IT Solutions</h3>
+                <p class="text-slate-500 text-sm transition-colors">We solve every technical challenge.</p>
                 <div class="service-info w-full text-left">
                     <ul class="space-y-3 pt-4 text-white border-t border-white/20 font-bold text-sm">
-                        <li>● Custom Python Scripts</li>
-                        <li>● API Integration</li>
-                        <li>● Task Automation</li>
+                        <li>● Hardware & Network Setup</li>
+                        <li>● Software Troubleshooting</li>
+                        <li>● End-to-End Consulting</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="max-w-6xl mx-auto px-6 py-20 pb-40">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-                <h2 class="text-4xl font-bold text-slate-900 mb-6 italic tracking-tight leading-tight">Let's build something <span class="text-blue-600 font-extrabold italic">extraordinary.</span></h2>
-                <p class="text-lg text-slate-500 mb-10 font-medium">Reach out and our team will navigate you through your technical journey.</p>
-                <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0 font-bold italic text-slate-900">Q</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm italic">When we can start?</h4>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Start within 3-5 business days.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center shrink-0 font-bold italic text-slate-900">Q</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm italic">Flexible Pricing</h4>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Fixed-price or flexible retainers available.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="work" class="max-w-6xl mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight italic leading-tight">
+                Crafted with <span class="text-blue-600 font-extrabold italic">Precision.</span>
+            </h2>
+            <p class="text-base md:text-lg text-slate-500 max-w-2xl mx-auto font-medium">
+                A selection of our live projects. We build systems that drive traffic and solve problems.
+            </p>
+        </div>
 
-            <div class="glass p-10 rounded-[5rem] border border-slate-200 shadow-2xl relative overflow-hidden">
-                <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
-                <h3 class="text-4xl font-bold text-slate-900 mb-8 italic text-center">Start a Project</h3>
-                <div class="space-y-4">
-                    <a href="mailto:aeridontech@gmail.com" class="flex items-center justify-center w-full px-8 py-5 bg-slate-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition shadow-xl">
-                        Send us an Email
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+            <div class="group glass rounded-[3rem] p-4 border border-white/40 hover:shadow-2xl transition-all duration-500 flex flex-col">
+                <div class="bg-slate-100 rounded-t-[2.5rem] p-4 flex gap-2 border-b border-slate-200">
+                    <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                </div>
+                <div class="w-full h-64 md:h-80 overflow-hidden relative bg-slate-200">
+                    <img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=2670&auto=format&fit=crop" 
+                         alt="FormatMyCitation Interface" 
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="p-8 pb-10">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded-full">EdTech</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider rounded-full">Tool</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 italic">FormatMyCitation.com</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                        A streamlined academic tool designed for efficiency. This platform automates the citation process, ensuring accuracy for students and researchers with a distraction-free user interface.
+                    </p>
+                    <a href="https://formatmycitation.com" target="_blank" class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition group/link">
+                        Visit Website 
+                        <span class="group-hover/link:translate-x-1 transition-transform">→</span>
                     </a>
-                    <button id="copyEmailBtn" class="flex items-center justify-between w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-700 hover:bg-white transition group">
-                        <span id="emailText" class="text-sm">aeridontech@gmail.com</span>
-                        <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    </button>
-                    <p id="copyStatus" class="text-center text-indigo-600 text-[10px] font-bold opacity-0 transition italic uppercase tracking-widest text-xs">Address copied!</p>
-                </div>
-
-                <div class="mt-8 pt-8 border-t border-slate-100 flex flex-wrap justify-center gap-6">
-                    <a href="https://x.com/AeridonTech" target="_blank" class="text-slate-400 hover:text-blue-400 transition text-[10px] font-bold uppercase tracking-widest">X (Twitter)</a>
-                    <a href="https://www.instagram.com/aeridontech/" target="_blank" class="text-slate-400 hover:text-pink-500 transition text-[10px] font-bold uppercase tracking-widest">Instagram</a>
-                    <a href="https://www.facebook.com/people/Aeridontech/61578533461562/" target="_blank" class="text-slate-400 hover:text-blue-600 transition text-[10px] font-bold uppercase tracking-widest">Facebook</a>
                 </div>
             </div>
+
+            <div class="group glass rounded-[3rem] p-4 border border-white/40 hover:shadow-2xl transition-all duration-500 flex flex-col">
+                <div class="bg-slate-100 rounded-t-[2.5rem] p-4 flex gap-2 border-b border-slate-200">
+                    <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                </div>
+                <div class="w-full h-64 md:h-80 overflow-hidden relative bg-slate-200">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop" 
+                         alt="Online Game World Interface" 
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="p-8 pb-10">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full">Entertainment</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider rounded-full">Platform</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 italic">OnlineGameWorld.fun</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                        An immersive digital gaming hub. We engineered a responsive portal that delivers instant-play games with high performance and zero-latency loading across all devices.
+                    </p>
+                    <a href="https://onlinegameworld.fun" target="_blank" class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition group/link">
+                        Visit Website 
+                        <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+   <section id="contact" class="max-w-6xl mx-auto px-6 py-12 pb-24">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-4 italic tracking-tight leading-tight">
+                Let's build something <span class="text-blue-600 font-extrabold italic">extraordinary.</span>
+            </h2>
+            <p class="text-base text-slate-500 font-medium">Reach out and our team will navigate you through your technical journey.</p>
+        </div>
+
+        <div class="glass rounded-[3rem] border border-slate-200 shadow-2xl overflow-hidden relative">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                
+                <div class="p-8 md:p-10 flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 italic">Start a Project</h3>
+                    <div class="space-y-3">
+                        <a href="mailto:aeridontech@gmail.com" class="flex items-center justify-center w-full px-6 py-3 bg-slate-900 text-white rounded-full font-bold hover:bg-blue-600 transition shadow-lg group text-sm">
+                            <span>Send us an Email</span>
+                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                        
+                        <button id="copyEmailBtn" class="flex items-center justify-between w-full px-6 py-3 bg-slate-50 border border-slate-200 rounded-full font-bold text-slate-700 hover:bg-white transition group text-sm">
+                            <span id="emailText">aeridontech@gmail.com</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <p id="copyStatus" class="text-center text-indigo-600 text-[10px] font-bold opacity-0 transition italic uppercase tracking-widest">Address copied!</p>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-10 flex flex-col justify-center items-center text-center bg-slate-50/50">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 italic">Follow Us</h3>
+                    <div class="flex gap-4 items-center">
+                        <a href="https://x.com/AeridonTech" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-black hover:scale-110 hover:shadow-md transition-all duration-300 border border-slate-200">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/aeridontech/" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-pink-500 hover:scale-110 hover:shadow-md transition-all duration-300 border border-slate-200">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M7.5 3h9a4.5 4.5 0 014.5 4.5v9a4.5 4.5 0 01-4.5 4.5h-9A4.5 4.5 0 013 16.5v-9A4.5 4.5 0 017.5 3z"></path></svg>
+                        </a>
+                        <a href="https://www.facebook.com/people/Aeridontech/61578533461562/" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-400 hover:text-blue-600 hover:scale-110 hover:shadow-md transition-all duration-300 border border-slate-200">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                    </div>
+                    <p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">@AeridonTech</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq" class="max-w-3xl mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight italic">
+                Common <span class="text-blue-600 font-extrabold italic">Questions.</span>
+            </h2>
+            <p class="text-sm text-slate-500 font-medium">Everything you need to know before we start.</p>
+        </div>
+
+        <div class="space-y-4">
+            
+            <div onclick="toggleFaq(this)" class="group glass rounded-[2rem] p-1 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-sky-300/30 group-[.open]:shadow-lg group-[.open]:shadow-sky-300/30">
+                <div class="flex items-center justify-between p-6">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base italic">How long does a project take?</h3>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-[.open]:bg-blue-600 group-[.open]:text-white transition-all">
+                        <svg class="w-4 h-4 transition-transform duration-300 group-[.open]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-[.open]:max-h-40">
+                    <p class="px-6 pb-6 text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                        It depends on the scope. A standard business website takes about <strong>2–3 weeks</strong>. Complex web apps, automation systems, or full branding packages typically take <strong>4–6 weeks</strong>. We provide a strict timeline before we start.
+                    </p>
+                </div>
+            </div>
+
+            <div onclick="toggleFaq(this)" class="group glass rounded-[2rem] p-1 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-sky-300/30 group-[.open]:shadow-lg group-[.open]:shadow-sky-300/30">
+                <div class="flex items-center justify-between p-6">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base italic">Do you offer payment plans?</h3>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-[.open]:bg-blue-600 group-[.open]:text-white transition-all">
+                        <svg class="w-4 h-4 transition-transform duration-300 group-[.open]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-[.open]:max-h-40">
+                    <p class="px-6 pb-6 text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                        Yes. We typically require a <strong>50% deposit</strong> to secure your slot in our schedule, with the remaining 50% due upon completion. For larger projects, we can split payments into milestones.
+                    </p>
+                </div>
+            </div>
+
+            <div onclick="toggleFaq(this)" class="group glass rounded-[2rem] p-1 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-sky-300/30 group-[.open]:shadow-lg group-[.open]:shadow-sky-300/30">
+                <div class="flex items-center justify-between p-6">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base italic">Do I need to provide the design/graphics?</h3>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-[.open]:bg-blue-600 group-[.open]:text-white transition-all">
+                        <svg class="w-4 h-4 transition-transform duration-300 group-[.open]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-[.open]:max-h-48">
+                    <p class="px-6 pb-6 text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                        Not at all. We are a full-stack studio. We handle the <strong>UI/UX design, logo creation, and graphics</strong> in-house. If you already have brand assets, we can work with them; otherwise, we build everything from scratch.
+                    </p>
+                </div>
+            </div>
+
+            <div onclick="toggleFaq(this)" class="group glass rounded-[2rem] p-1 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-sky-300/30 group-[.open]:shadow-lg group-[.open]:shadow-sky-300/30">
+                <div class="flex items-center justify-between p-6">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base italic">Can you automate my business workflow?</h3>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-[.open]:bg-blue-600 group-[.open]:text-white transition-all">
+                        <svg class="w-4 h-4 transition-transform duration-300 group-[.open]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-[.open]:max-h-48">
+                    <p class="px-6 pb-6 text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                        Almost certainly. If a task involves data entry, emails, or repetitive clicking, we can script it. We use <strong>Python and custom API integrations</strong> to build bots that run 24/7 without errors.
+                    </p>
+                </div>
+            </div>
+
+             <div onclick="toggleFaq(this)" class="group glass rounded-[2rem] p-1 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-sky-300/30 group-[.open]:shadow-lg group-[.open]:shadow-sky-300/30">
+                <div class="flex items-center justify-between p-6">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base italic">Do you provide ongoing support?</h3>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-[.open]:bg-blue-600 group-[.open]:text-white transition-all">
+                        <svg class="w-4 h-4 transition-transform duration-300 group-[.open]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+                <div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-[.open]:max-h-40">
+                    <p class="px-6 pb-6 text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+                        We offer a <strong>30-day bug-fix guarantee</strong> on all code and automation scripts. After that, we offer optional monthly maintenance packages to keep your systems secure, updated, and running smoothly.
+                    </p>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <footer class="py-12 text-center text-slate-400 text-[10px] tracking-widest uppercase italic border-t border-slate-50">
-        &copy; 2025 AeridonTech Studio.
+        &copy; 2025 AeridonTech.
     </footer>
 
     <script src="js/script.js"></script>
