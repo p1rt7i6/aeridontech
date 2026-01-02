@@ -73,3 +73,81 @@ function animate() {
 }
 window.addEventListener('resize', init);
 init(); animate();
+
+// ===========================
+// STATS COUNTER ANIMATION
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+    const statsContainer = document.querySelector('#stats-container');
+    const counters = document.querySelectorAll('.counter-number');
+    let started = false; // Ensure animation only runs once
+
+    // Easing function for smooth end deceleration (Ease Out Quint)
+    // This makes the counting slow down smoothly at the end
+    const easeOutQuint = (t, b, c, d) => {
+        t /= d;
+        t--;
+        return c * (t * t * t * t * t + 1) + b;
+    };
+
+    const startCounting = () => {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const suffix = counter.getAttribute('data-suffix');
+            const duration = 2000; // Animation duration in milliseconds (2 seconds)
+            let startTime = null;
+
+            // The animation engine
+            const animate = (currentTime) => {
+                if (!startTime) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                
+                // Calculate current position using easing function
+                let run = easeOutQuint(timeElapsed, 0, target, duration);
+
+                // Display the current number (rounded) plus the suffix (% or °)
+                counter.innerText = Math.round(run) + suffix;
+
+                // Keep running until duration is met
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animate);
+                } else {
+                    // Ensure it ends exactly on the target number
+                    counter.innerText = target + suffix;
+                }
+            };
+
+            requestAnimationFrame(animate);
+        });
+    };
+
+    // Watcher: Triggers animation when section is 40% visible in viewport
+    const observerOptions = { root: null, threshold: 0.4 }; 
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !started) {
+                startCounting();
+                started = true;
+                observer.unobserve(entry.target); // Stop watching once animated
+            }
+        });
+    }, observerOptions);
+
+    if (statsContainer) {
+        statsObserver.observe(statsContainer);
+    }
+});
+
+// FAQ Accordion Toggle
+function toggleFaq(element) {
+    // Optional: Close other FAQs when one opens
+    const allFaqs = document.querySelectorAll('#faq .group');
+    allFaqs.forEach(faq => {
+        if (faq !== element) {
+            faq.classList.remove('open');
+        }
+    });
+
+    // Toggle the clicked one
+    element.classList.toggle('open');
+}
